@@ -1,7 +1,16 @@
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [currMsg, setCurrMsg] = useState("Hello!");
+
+  useEffect( () => {
+    fetch('/api/hello')
+      .then(res => res.json())
+        .then(data => { setCurrMsg(data.msg); });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +26,7 @@ function App() {
         >
           Learn React
         </a>
+        <p><strong>Message:</strong> <i>{currMsg}</i></p>
       </header>
     </div>
   );
