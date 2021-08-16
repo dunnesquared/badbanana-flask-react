@@ -1,35 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
+
+import Question from './components/Question/Question';
+import AnswerForm from './components/Answer/AnswerForm';
+import PlayerStatus from './components/PlayerStatus/PlayerStatus';
 
 function App() {
-  const [currMsg, setCurrMsg] = useState("Hello!");
+  const [question, setQuestion] = useState("");
 
   useEffect( () => {
-    fetch('/api/hello')
+    // Create a player by default so you don't get errors later on.
+    fetch('/api/question')
       .then(res => res.json())
-        .then(data => { setCurrMsg(data.msg); });
+        .then(data => { setQuestion(data.question); });
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p><strong>Message:</strong> <i>{currMsg}</i></p>
-      </header>
+    <div>
+      <p>Ahoj!</p>
+      <Question question={question} />
     </div>
   );
 }
 
 export default App;
+
