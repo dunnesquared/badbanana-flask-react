@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 // import './App.css';
 
 import Title from "./components/Title/Title";
+import Instructions from "./components/Instructions/Instructions";
 import Question from "./components/Question/Question";
 import AnswerForm from "./components/Answer/AnswerForm";
 import PlayerStatus from "./components/PlayerStatus/PlayerStatus";
@@ -30,6 +31,7 @@ function App() {
   return (
     <div>
       <Title title={title} />
+      <Instructions instructions="Play the game." />
       <Question question={question} />
       <AnswerForm onUpdatePlayerStatus={updatePlayerStatus} />
     </div>
