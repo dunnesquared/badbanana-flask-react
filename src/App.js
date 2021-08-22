@@ -16,7 +16,6 @@ function App() {
   let age = 40;
   console.log('my age', age);
 
-  const [question, setQuestion] = useState("");
   const [score, setScore] = useState("");
   const [lives, setLives] = useState("");
 
@@ -33,14 +32,7 @@ function App() {
     setStatusData(statusData);
   };
 
-  useEffect(() => {
-    // Get random arithmetic question from server.
-    fetch("/api/question")
-      .then((res) => res.json())
-      .then((data) => {
-        setQuestion(data.question);
-      });
-
+  useEffect(() => {  
     fetch("/api/score-lives")
       .then((res) => res.json())
       .then((data) => {
@@ -54,7 +46,7 @@ function App() {
       <Title title={title} />
       <Instructions />
       <hr></hr>
-      <Question question={question} />
+      <Question />
       <hr></hr>
       <AnswerForm
         onUpdatePlayerStatus={updatePlayerStatus}
