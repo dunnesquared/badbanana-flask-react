@@ -7,29 +7,31 @@ import Instructions from "./components/Instructions/Instructions";
 import Question from "./components/Question/Question";
 import AnswerForm from "./components/Answer/AnswerForm";
 import ScoreLives from "./components/ScoreLives/ScoreLives";
-import PlayerStatus from "./components/PlayerStatus/PlayerStatus";
 
 function App() {
   // App title
   const title = "Ahoj! Welcome to Bad Banana💩🍌!";
 
-  let age = 40;
-  console.log('my age', age);
-
+  // Required to get data from AnswerForm component to ScoreLives ScoreComponentt
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(0);
+  const [answerCorrect, setAnswerCorrect] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [answer, setAnswer] = useState("");
+  const updateGameState = (gameStateData) => {
+    // Debugging
+    console.log(gameStateData);
 
-  const updateScore = (currScore) => {
-    setScore(currScore);
-  };
-
-  const updateLives = (currLives) => {
-    setLives(currLives);
+    setScore(gameStateData.score);
+    setLives(gameStateData.lives);
+    setAnswerCorrect(gameStateData.correct_answer);
+    setGameOver(gameStateData.game_over);
+    setAnswer(gameStateData.answer);
   };
 
   // Keep this as it fetches the lastest scores from the server
   // if the session is still alive.
-  useEffect(() => {  
+  useEffect(() => {
     fetch("/api/score-lives")
       .then((res) => res.json())
       .then((data) => {
@@ -45,10 +47,7 @@ function App() {
       <hr></hr>
       <Question />
       <hr></hr>
-      <AnswerForm
-        onUpdateScore={updateScore}
-        onUpdateLives={updateLives}
-      />
+      <AnswerForm onUpdateGameState={updateGameState} />
       <hr></hr>
       <ScoreLives score={score} lives={lives} />
     </div>
