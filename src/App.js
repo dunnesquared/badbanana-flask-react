@@ -16,8 +16,8 @@ function App() {
   let age = 40;
   console.log('my age', age);
 
-  const [score, setScore] = useState("");
-  const [lives, setLives] = useState("");
+  const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(0);
 
   const updateScore = (currScore) => {
     setScore(currScore);
@@ -27,11 +27,8 @@ function App() {
     setLives(currLives);
   };
 
-  const [statusData, setStatusData] = useState("");
-  const updatePlayerStatus = (statusData) => {
-    setStatusData(statusData);
-  };
-
+  // Keep this as it fetches the lastest scores from the server
+  // if the session is still alive.
   useEffect(() => {  
     fetch("/api/score-lives")
       .then((res) => res.json())
@@ -49,7 +46,6 @@ function App() {
       <Question />
       <hr></hr>
       <AnswerForm
-        onUpdatePlayerStatus={updatePlayerStatus}
         onUpdateScore={updateScore}
         onUpdateLives={updateLives}
       />
