@@ -6,6 +6,7 @@ import Title from "./components/Title/Title";
 import Instructions from "./components/Instructions/Instructions";
 import Question from "./components/Question/Question";
 import AnswerForm from "./components/Answer/AnswerForm";
+import AnswerResult from "./components/Answer/AnswerResult";
 import ScoreLives from "./components/ScoreLives/ScoreLives";
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
   // Required to get data from AnswerForm component to ScoreLives ScoreComponentt
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(0);
-  const [answerCorrect, setAnswerCorrect] = useState(false);
+  const [answerCorrect, setAnswerCorrect] = useState(null);
   const [gameOver, setGameOver] = useState(false);
   const [answer, setAnswer] = useState("");
   const updateGameState = (gameStateData) => {
@@ -48,6 +49,7 @@ function App() {
       <Question />
       <hr></hr>
       <AnswerForm onUpdateGameState={updateGameState} />
+      <AnswerResult answerCorrect={answerCorrect} answer={answer} />
       <hr></hr>
       <ScoreLives score={score} lives={lives} />
     </div>
