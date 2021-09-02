@@ -9,6 +9,13 @@ app = Flask(__name__)
 
 app.secret_key = "super-secret-key"
 
+# To avoid console warnings caused by proxy requests made in client.
+app.config.update(
+    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_SAMESITE='None'
+)
+
+
 @app.get('/api/hello')
 def hello():
     return {"msg": "hello, world"}
@@ -17,14 +24,11 @@ def hello():
 @app.get('/api/score-lives')
 def get_score_lives():
     """Gets player's current score and number of lives remaining."""
-    if not session.get('player', None):
-        return {'success': False,  'message': "Player not created."}, 404
-    else:
-        return {
-                'success': True, 
-                'score': session['player']['score'],
-                'lives': session['player']['lives']
-                }
+    if not (session.get('score', None) and session.get('lives', None)):
+        session['score'] = 0
+        session['lives'] = 3
+    return {'score': session['score'], 'lives': session['lives']}
+
 
 @app.get('/api/question')
 def get_question() -> Dict:
@@ -34,7 +38,45 @@ def get_question() -> Dict:
     question = game.get_random_question()
     # Serializes object into a dict so it is JSON serializable
     session['question'] = question.__dict__
-    return { 'question': str(question) }
+    return {'question': str(question)}
 
 
+@app.post('/api/answer')
+def submit_answer() -> Dict:
+    # Only use this if you want generate a new question
+    print(session)
+    qdata = session.get('question', None)
 
+    # Retrieve user answer
+    request_data = request.get_json()
+    print(request_data)
+    user_answer = int(request_data['user_answer'])
+
+    # DEBUG
+    print(qdata)
+    print(user_answer)
+
+    # This won't work for division questions.
+    question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
+                               operator=qdata['operator'])
+
+    # Need to deserialize dict back into object to do actual checking
+    if not question:
+        return {'message': 'No question asked.'}
+
+    correct_answer = question.check_answer(user_answer)
+    game_over = False
+    if correct_answer:
+        session['score'] += 1
+    else:
+        session['lives'] -= 1
+        if session['lives'] == 0:
+            game_over = True
+
+    return {
+        'correct_answer': correct_answer,
+        'answer': question.answer,
+        'game_over': game_over,
+        'lives': session['lives'],
+        'score': session['score']
+    }
