@@ -15,18 +15,34 @@ app.config.update(
     SESSION_COOKIE_SAMESITE='None'
 )
 
+INITIAL_SCORE = 0
+INITIAL_LIVES = 3
+
 
 @app.get('/api/hello')
 def hello():
     return {"msg": "hello, world"}
 
 
+@app.get('/api/new-game')
+def new_game():
+    """Resets score and lives back to their starting values if needed. returns current score
+    and lives regardless."""
+    score = session.get('score', None)
+    lives = session.get('lives', None)
+    if score != INITIAL_SCORE and lives != INITIAL_LIVES:
+        session['score'] = INITIAL_SCORE
+        session['lives'] = INITIAL_LIVES
+    return {'score': session['score'], 'lives': session['lives']}
+
+
+
 @app.get('/api/score-lives')
 def get_score_lives():
     """Gets player's current score and number of lives remaining."""
     if not (session.get('score', None) and session.get('lives', None)):
-        session['score'] = 0
-        session['lives'] = 3
+        session['score'] = INITIAL_SCORE
+        session['lives'] = INITIAL_LIVES
     return {'score': session['score'], 'lives': session['lives']}
 
 
