@@ -8,7 +8,7 @@ import Question from "./components/Question/Question";
 import AnswerForm from "./components/Answer/AnswerForm";
 import AnswerResult from "./components/Answer/AnswerResult";
 import ScoreLives from "./components/ScoreLives/ScoreLives";
-import RestartGame from "./components/Controls/RestartGame";
+import NewGame from "./components/Controls/NewGame";
 
 function App() {
   // App title
@@ -54,7 +54,7 @@ function App() {
       <hr></hr>
       <ScoreLives score={score} lives={lives} />
       <hr></hr>
-      <RestartGame />
+      <NewGame onUpdateGameState={updateGameState}/>
     </div>
   );
 }
