@@ -9,6 +9,7 @@ import AnswerForm from "./components/Answer/AnswerForm";
 import AnswerResult from "./components/Answer/AnswerResult";
 import ScoreLives from "./components/ScoreLives/ScoreLives";
 import NewGame from "./components/Controls/NewGame";
+import GameOver from "./components/GameOver/GameOver";
 
 function App() {
   // App title
@@ -53,6 +54,9 @@ function App() {
       <AnswerResult answerCorrect={answerCorrect} answer={answer} />
       <hr></hr>
       <ScoreLives score={score} lives={lives} />
+      {
+        gameOver && <GameOver />
+      }
       <hr></hr>
       <NewGame onUpdateGameState={updateGameState}/>
     </div>
