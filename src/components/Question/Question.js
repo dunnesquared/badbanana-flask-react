@@ -3,14 +3,28 @@ import React, { useState } from "react";
 const Question = (props) => {
   const [question, setQuestion] = useState("...");
   const [questionType, setQuestionType] = useState("");
+  const [smallestNumber, setSmallestNumber] = useState(0);
+  const [largestNumber, setLargestNumber] = useState(1000);
 
   const changeHandler = (event) => {
     setQuestionType(event.target.value);
   };
 
+  const smallestNumberChangeHandler = (event) => {
+    setSmallestNumber(event.target.value);
+  };
+
+  const largestNumberChangeHandler = (event) => {
+    setLargestNumber(event.target.value);
+  };
+
   const submitHandler = (event) => {
+    // DEBUG STATEMENTS
     console.log("submit!");
     console.log(questionType);
+    console.log(smallestNumber);
+    console.log(largestNumber);
+
     fetch("/api/question")
       .then((res) => res.json())
       .then((data) => {
@@ -35,6 +49,27 @@ const Question = (props) => {
             </select>
           </div>
         </label>
+        <br></br>
+        <div>
+          <label>From:</label>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            value={smallestNumber}
+            onChange={smallestNumberChangeHandler}
+          />
+
+          <label>To:</label>
+          <input
+            type="number"
+            min={smallestNumber}
+            step="1"
+            value={largestNumber}
+            onChange={largestNumberChangeHandler}
+          />
+        </div>
+
         <div>
           <br></br>
           <input type="submit" value="Generate Question" />
