@@ -30,11 +30,10 @@ def new_game():
     and lives regardless."""
     score = session.get('score', None)
     lives = session.get('lives', None)
-    if score != INITIAL_SCORE and lives != INITIAL_LIVES:
+    if score != INITIAL_SCORE or lives != INITIAL_LIVES:
         session['score'] = INITIAL_SCORE
         session['lives'] = INITIAL_LIVES
     return {'score': session['score'], 'lives': session['lives']}
-
 
 
 @app.get('/api/score-lives')
@@ -46,9 +45,17 @@ def get_score_lives():
     return {'score': session['score'], 'lives': session['lives']}
 
 
-@app.get('/api/question')
-def get_question() -> Dict:
+@app.post('/api/question')
+def generate_question() -> Dict:
     """Gets a random arithmetic question."""
+
+    # Parse JSON data from request
+    request_data = request.get_json()
+    question_type = request_data['questionType']
+    lowerbound = int(request_data['smallestNumber'])
+    upperbound = int(request_data['largestNumber'])
+    print(question_type, lowerbound, upperbound)
+
     # Default player required if you're going to instantiate a Game object.
     game = Game(player=None)
     question = game.get_random_question()

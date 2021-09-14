@@ -19,18 +19,20 @@ const Question = (props) => {
   };
 
   const submitHandler = (event) => {
-    // DEBUG STATEMENTS
-    console.log("submit!");
-    console.log(questionType);
-    console.log(smallestNumber);
-    console.log(largestNumber);
+    const url = "api/question";
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ questionType, smallestNumber, largestNumber }),
+    };
 
-    fetch("/api/question")
+    fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
         console.log(data.question);
         setQuestion(data.question);
-      });
+      })
+      .catch((error) => console.log("Question Form Submit Error", error));
     event.preventDefault();
   };
 
