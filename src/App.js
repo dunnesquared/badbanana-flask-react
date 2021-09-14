@@ -49,7 +49,6 @@ function App() {
       <Instructions />
       <hr></hr>
       <Question />
-      <hr></hr>
       <AnswerForm onUpdateGameState={updateGameState} />
       <AnswerResult answerCorrect={answerCorrect} answer={answer} />
       <hr></hr>
