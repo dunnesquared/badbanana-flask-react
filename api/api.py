@@ -58,7 +58,10 @@ def generate_question() -> Dict:
 
     # Default player required if you're going to instantiate a Game object.
     game = Game(player=None)
+    game.set_question_bounds(lowerbound, upperbound)
+    game.set_question_type(question_type)
     question = game.get_random_question()
+    
     # Serializes object into a dict so it is JSON serializable
     session['question'] = question.__dict__
     return {'question': str(question)}
