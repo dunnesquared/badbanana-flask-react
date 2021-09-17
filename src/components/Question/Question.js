@@ -43,7 +43,6 @@ const Question = (props) => {
           What kind of arithmetic do you want to practice?
           <div>
             <select value={questionType} onChange={changeHandler}>
-              <option value="">--Please choose a question type--</option>
               <option value="Multiplication">Multiplication</option>
               <option value="Division">Division</option>
               <option value="Addition">Addition</option>
