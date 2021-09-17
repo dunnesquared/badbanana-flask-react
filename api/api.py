@@ -1,4 +1,6 @@
+import random
 from typing import Dict
+
 from flask import Flask, session, request
 
 from badbanana.game import Game
@@ -58,10 +60,17 @@ def generate_question() -> Dict:
 
     # Default player required if you're going to instantiate a Game object.
     game = Game(player=None)
+
+    # Set up question parameters.
     game.set_question_bounds(lowerbound, upperbound)
+
+    # Allow the user to generate a question with a randomly-selected arithmetic operator
+    if question_type.strip().lower() == 'any':
+        question_type = random.choice(list(game.get_valid_operations()))
+
     game.set_question_type(question_type)
     question = game.get_random_question()
-    
+
     # Serializes object into a dict so it is JSON serializable
     session['question'] = question.__dict__
     return {'question': str(question)}

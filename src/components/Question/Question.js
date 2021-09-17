@@ -47,6 +47,7 @@ const Question = (props) => {
               <option value="Division">Division</option>
               <option value="Addition">Addition</option>
               <option value="Subtraction">Subtraction</option>
+              <option value="Any">Any Kind</option>
             </select>
           </div>
         </label>
