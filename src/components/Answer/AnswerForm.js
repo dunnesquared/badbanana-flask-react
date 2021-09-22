@@ -30,6 +30,11 @@ const AnswerForm = (props) => {
     setEnteredAnswer("");
   };
 
+  // Don't display the answer form at the start of a new game or game resest.
+  if (props.newGame){
+    return null;
+  }
+
   return (
     <form onSubmit={submitHandler}>
       <div>

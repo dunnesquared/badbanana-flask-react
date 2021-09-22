@@ -21,6 +21,8 @@ function App() {
   const [answerCorrect, setAnswerCorrect] = useState(null);
   const [gameOver, setGameOver] = useState(false);
   const [answer, setAnswer] = useState("");
+  const [newGame, setNewGame] = useState(true);
+
   const updateGameState = (gameStateData) => {
     // Debugging
     console.log(gameStateData);
@@ -30,6 +32,12 @@ function App() {
     setAnswerCorrect(gameStateData.correct_answer);
     setGameOver(gameStateData.game_over);
     setAnswer(gameStateData.answer);
+    setNewGame(gameStateData.new_game);
+  };
+
+  const updateNewGameToFalse = () => {
+    console.log("fgfdgfdgdf");
+    setNewGame(false);
   };
 
   // Keep this as it fetches the lastest scores from the server
@@ -48,16 +56,21 @@ function App() {
       <Title title={title} />
       <Instructions />
       <hr></hr>
-      <Question />
-      <AnswerForm onUpdateGameState={updateGameState} />
+      <Question
+        newGame={newGame}
+        onUpdateNewGameToFalse={updateNewGameToFalse}
+      />
+      <AnswerForm
+        onUpdateGameState={updateGameState}
+        newGame={newGame}
+        onUpdateNewGameToFalse={updateNewGameToFalse}
+      />
       <AnswerResult answerCorrect={answerCorrect} answer={answer} />
       <hr></hr>
       <ScoreLives score={score} lives={lives} />
-      {
-        gameOver && <GameOver />
-      }
+      {gameOver && <GameOver />}
       <hr></hr>
-      <NewGame onUpdateGameState={updateGameState}/>
+      <NewGame onUpdateGameState={updateGameState} />
     </div>
   );
 }

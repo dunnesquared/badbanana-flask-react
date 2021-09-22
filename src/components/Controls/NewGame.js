@@ -1,4 +1,6 @@
 const NewGame = (props) => {
+
+  
   const clickHandler = () => {
     console.log("Restart game!");
     if (
@@ -16,7 +18,8 @@ const NewGame = (props) => {
               lives: data.lives,
               correct_answer: null,
               game_over: false,
-              answer: ""
+              answer: "", 
+              new_game: true
           }
           props.onUpdateGameState(newGameData);
         });

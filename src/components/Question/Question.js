@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Question = (props) => {
   const [question, setQuestion] = useState("...");
   const [questionType, setQuestionType] = useState("");
   const [smallestNumber, setSmallestNumber] = useState(0);
   const [largestNumber, setLargestNumber] = useState(1000);
-
+  
   const changeHandler = (event) => {
     setQuestionType(event.target.value);
   };
@@ -19,6 +19,10 @@ const Question = (props) => {
   };
 
   const submitHandler = (event) => {
+    // Once this button is clicked, game is no longer new.
+    props.onUpdateNewGameToFalse();
+
+    // Get new question
     const url = "api/question";
     const requestOptions = {
       method: "POST",
@@ -36,6 +40,11 @@ const Question = (props) => {
     event.preventDefault();
   };
 
+  console.log("question.newGame", props.newGame);
+  
+
+  // If new game, hide the last question; reset arithmetic type to the first value in the
+  // selection list; reset from/to values to default starting values.
   return (
     <form onSubmit={submitHandler}>
       <div>
@@ -61,7 +70,6 @@ const Question = (props) => {
             value={smallestNumber}
             onChange={smallestNumberChangeHandler}
           />
-
           <label>To:</label>
           <input
             type="number"
@@ -77,7 +85,7 @@ const Question = (props) => {
           <input type="submit" value="Generate Question" />
         </div>
       </div>
-      <p>What is {question}?</p>
+      {props.newGame == false && <p>What is {question}?</p>}
     </form>
   );
 };

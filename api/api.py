@@ -113,5 +113,6 @@ def submit_answer() -> Dict:
         'answer': question.answer,
         'game_over': game_over,
         'lives': session['lives'],
-        'score': session['score']
+        'score': session['score'], 
+        'new_game': False
     }
