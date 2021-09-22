@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const Question = (props) => {
   const [question, setQuestion] = useState("...");
-  const [questionType, setQuestionType] = useState("");
+  const [questionType, setQuestionType] = useState("Multiplication");
   const [smallestNumber, setSmallestNumber] = useState(0);
   const [largestNumber, setLargestNumber] = useState(1000);
   
