@@ -24,3 +24,7 @@ yarn-error.log*
 
 __pycache__
 venv
+_todo.txt
+flask_session
+
+*.bak
