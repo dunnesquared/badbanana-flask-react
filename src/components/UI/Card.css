@@ -1,0 +1,6 @@
+/* Code from https://www.udemy.com/course/react-the-complete-guide-incl-redux/ */
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}

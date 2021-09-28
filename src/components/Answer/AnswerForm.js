@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import Card from "../UI/Card";
+import "./AnswerForm.css";
+
 const AnswerForm = (props) => {
   const [enteredAnswer, setEnteredAnswer] = useState("");
 
@@ -22,7 +25,7 @@ const AnswerForm = (props) => {
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
-        props.onUpdateGameState(data);  
+        props.onUpdateGameState(data);
       })
       .catch((error) => console.log("Form submit error", error));
 
@@ -31,23 +34,25 @@ const AnswerForm = (props) => {
   };
 
   // Don't display the answer form at the start of a new game or game resest.
-  if (props.newGame){
+  if (props.newGame) {
     return null;
   }
 
   return (
     <form onSubmit={submitHandler}>
-      <div>
-        <label>Answer</label>
-        <input
-          type="number"
-          value={enteredAnswer}
-          onChange={answerChangeHandler}
-        />
-      </div>
-      <div>
-        <button type="submit">Submit</button>
-      </div>
+      <Card className="answer-form">
+        <div>
+          <label>Answer</label>
+          <input
+            type="number"
+            value={enteredAnswer}
+            onChange={answerChangeHandler}
+          />
+        </div>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+      </Card>
     </form>
   );
 };
