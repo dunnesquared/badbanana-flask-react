@@ -1,0 +1,8 @@
+.game-title {
+    margin: 2rem auto;
+    padding: 1rem;
+    width: 50rem; 
+    max-width:95rem;
+    background-color:#f5c4fa;
+    text-align: center;
+}
