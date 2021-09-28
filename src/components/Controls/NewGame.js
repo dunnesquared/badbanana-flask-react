@@ -1,6 +1,7 @@
-const NewGame = (props) => {
+import "./NewGame.css";
+import Card from "../UI/Card";
 
-  
+const NewGame = (props) => {
   const clickHandler = () => {
     console.log("Restart game!");
     if (
@@ -14,13 +15,13 @@ const NewGame = (props) => {
         .then((data) => {
           console.log("score:", data.score, "lives:", data.lives);
           const newGameData = {
-              score: data.score,
-              lives: data.lives,
-              correct_answer: null,
-              game_over: false,
-              answer: "", 
-              new_game: true
-          }
+            score: data.score,
+            lives: data.lives,
+            correct_answer: null,
+            game_over: false,
+            answer: "",
+            new_game: true,
+          };
           props.onUpdateGameState(newGameData);
         });
     } else {
@@ -30,7 +31,9 @@ const NewGame = (props) => {
 
   return (
     <div>
+      <Card className="new-game">
       <button onClick={clickHandler}>New Game</button>
+      </Card>
     </div>
   );
 };

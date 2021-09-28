@@ -13,7 +13,7 @@ import GameOver from "./components/GameOver/GameOver";
 
 function App() {
   // App title
-  const title = "Ahoj! Welcome to Bad Banana💩🍌!";
+  const title = "Ahoj! Welcome to Bad Banana!";
 
   // Required to get data from AnswerForm component to ScoreLives ScoreComponentt
   const [score, setScore] = useState(0);
@@ -55,7 +55,6 @@ function App() {
     <div>
       <Title title={title} />
       <Instructions />
-      <hr></hr>
       <Question
         newGame={newGame}
         onUpdateNewGameToFalse={updateNewGameToFalse}
@@ -66,11 +65,10 @@ function App() {
         onUpdateNewGameToFalse={updateNewGameToFalse}
       />
       <AnswerResult answerCorrect={answerCorrect} answer={answer} />
-      <hr></hr>
+
       <ScoreLives score={score} lives={lives} />
       {gameOver && <GameOver />}
-      <hr></hr>
-      <NewGame onUpdateGameState={updateGameState} />
+      {gameOver && <NewGame onUpdateGameState={updateGameState} />}
     </div>
   );
 }
