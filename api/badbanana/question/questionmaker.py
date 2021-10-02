@@ -1,7 +1,7 @@
 """Factory class that makes and sets up IntegerQuestion child classes."""
 import random
 
-from badbanana.question.questions import IntegerQuestion, AdditionQuestion, SubtractionQuestion, \
+from ...badbanana.question.questions import IntegerQuestion, AdditionQuestion, SubtractionQuestion, \
     MultiplicationQuestion, DivisionQuestion
 
 class QuestionMaker():

@@ -1,5 +1,5 @@
-from badbanana.question.questionmaker import QuestionMaker
-from badbanana.player import Player 
+from ..badbanana.question.questionmaker import QuestionMaker
+from ..badbanana.player import Player 
 
 class Game():
     def __init__(self, player : Player):

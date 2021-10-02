@@ -1,32 +1,25 @@
 import random
 from typing import Dict
 
-from flask import Flask, session, request
+from flask import Blueprint, session, request
 
-from badbanana.game import Game
-from badbanana.player import Player
-from badbanana.question.questions import IntegerQuestion
+from .badbanana.game import Game
+from .badbanana.player import Player
+from .badbanana.question.questions import IntegerQuestion
 
-app = Flask(__name__)
 
-app.secret_key = "super-secret-key"
-
-# To avoid console warnings caused by proxy requests made in client.
-app.config.update(
-    SESSION_COOKIE_SECURE=True,
-    SESSION_COOKIE_SAMESITE='None'
-)
+bp = Blueprint("api", __name__)
 
 INITIAL_SCORE = 0
 INITIAL_LIVES = 3
 
 
-@app.get('/api/hello')
+@bp.get('/api/hello')
 def hello():
     return {"msg": "hello, world"}
 
 
-@app.get('/api/new-game')
+@bp.get('/api/new-game')
 def new_game():
     """Resets score and lives back to their starting values if needed. returns current score
     and lives regardless."""
@@ -38,7 +31,7 @@ def new_game():
     return {'score': session['score'], 'lives': session['lives']}
 
 
-@app.get('/api/score-lives')
+@bp.get('/api/score-lives')
 def get_score_lives():
     """Gets player's current score and number of lives remaining."""
     if not (session.get('score', None) and session.get('lives', None)):
@@ -47,7 +40,7 @@ def get_score_lives():
     return {'score': session['score'], 'lives': session['lives']}
 
 
-@app.post('/api/question')
+@bp.post('/api/question')
 def generate_question() -> Dict:
     """Gets a random arithmetic question."""
 
@@ -76,7 +69,7 @@ def generate_question() -> Dict:
     return {'question': str(question)}
 
 
-@app.post('/api/answer')
+@bp.post('/api/answer')
 def submit_answer() -> Dict:
     # Only use this if you want generate a new question
     print(session)
@@ -113,6 +106,6 @@ def submit_answer() -> Dict:
         'answer': question.answer,
         'game_over': game_over,
         'lives': session['lives'],
-        'score': session['score'], 
+        'score': session['score'],
         'new_game': False
     }
