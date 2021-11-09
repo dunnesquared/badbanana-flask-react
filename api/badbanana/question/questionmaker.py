@@ -40,7 +40,8 @@ class QuestionMaker():
     def generate_random_question(self) -> IntegerQuestion:
         """Creates random questions for a chosen arithmetic operation."""
         # Be careful.
-        assert self.lowerbound < self.upperbound, "Lowerbound must be smaller than upperbound."
+        assert self.lowerbound <= self.upperbound, ("Lowerbound must be smaller than or equal to \
+                upperbound.")
         
         # Set operands. 
         x = random.randint(self.lowerbound, self.upperbound)
