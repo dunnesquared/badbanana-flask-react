@@ -62,7 +62,6 @@ function App() {
       <AnswerForm
         onUpdateGameState={updateGameState}
         newGame={newGame}
-        onUpdateNewGameToFalse={updateNewGameToFalse}
       />
       <AnswerResult
         answerCorrect={answerCorrect}
