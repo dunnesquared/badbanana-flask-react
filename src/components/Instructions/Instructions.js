@@ -7,7 +7,7 @@ const Instructions = (props) => {
   return (
     <div>
       <Card className="instructions">
-        Get a question right, get one point. Get a question wrong, lose a life.
+        Get a question right, get a point. Get a question wrong, lose a life.
         Lose all your lives and you're a BAD BANANA :-p!
       </Card>
     </div>
