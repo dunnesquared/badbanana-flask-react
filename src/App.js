@@ -64,7 +64,10 @@ function App() {
         newGame={newGame}
         onUpdateNewGameToFalse={updateNewGameToFalse}
       />
-      <AnswerResult answerCorrect={answerCorrect} answer={answer} />
+      <AnswerResult
+        answerCorrect={answerCorrect}
+        answer={answer}
+      />
 
       <ScoreLives score={score} lives={lives} />
       {gameOver && <GameOver />}
