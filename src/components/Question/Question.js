@@ -86,7 +86,7 @@ const Question = (props) => {
             <br></br>
             <input
               type="submit"
-              value="Generate New Question from Parameters"
+              value="Apply"
             />
           </div>
         </Card>
@@ -94,7 +94,7 @@ const Question = (props) => {
 
       {props.newGame == false && (
         <Card className="question">
-          <p>What is {question}?</p>
+          <p>{question} = ?</p>
         </Card>
       )}
     </form>
