@@ -36,7 +36,7 @@ function App() {
   };
 
   const updateNewGameToFalse = () => {
-    console.log("fgfdgfdgdf");
+    console.log("newGame set to false.");
     setNewGame(false);
   };
 
