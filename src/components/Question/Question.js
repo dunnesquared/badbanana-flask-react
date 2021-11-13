@@ -56,48 +56,50 @@ const Question = (props) => {
   // selection list; reset from/to values to default starting values.
   return (
     <div>
-      <form onSubmit={submitHandler}>
-        <div>
-          <Card className="question-form">
-            <label>
-              What kind of arithmetic do you want to practice?
-              <div>
-                <select value={questionType} onChange={changeHandler}>
-                  <option value="Multiplication">Multiplication</option>
-                  <option value="Division">Division</option>
-                  <option value="Addition">Addition</option>
-                  <option value="Subtraction">Subtraction</option>
-                  <option value="Any">Any Kind</option>
-                </select>
-              </div>
-            </label>
-            <br></br>
-            <div>
-              <label>From:</label>
-              <input
-                type="number"
-                min="0"
-                step="1"
-                value={smallestNumber}
-                onChange={smallestNumberChangeHandler}
-              />
-              <label>To:</label>
-              <input
-                type="number"
-                min={smallestNumber}
-                step="1"
-                value={largestNumber}
-                onChange={largestNumberChangeHandler}
-              />
-            </div>
-
-            <div>
+      {!props.gameOver && (
+        <form onSubmit={submitHandler}>
+          <div>
+            <Card className="question-form">
+              <label>
+                What kind of arithmetic do you want to practice?
+                <div>
+                  <select value={questionType} onChange={changeHandler}>
+                    <option value="Multiplication">Multiplication</option>
+                    <option value="Division">Division</option>
+                    <option value="Addition">Addition</option>
+                    <option value="Subtraction">Subtraction</option>
+                    <option value="Any">Any Kind</option>
+                  </select>
+                </div>
+              </label>
               <br></br>
-              <input type="submit" value="Apply" />
-            </div>
-          </Card>
-        </div>
-      </form>
+              <div>
+                <label>From:</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={smallestNumber}
+                  onChange={smallestNumberChangeHandler}
+                />
+                <label>To:</label>
+                <input
+                  type="number"
+                  min={smallestNumber}
+                  step="1"
+                  value={largestNumber}
+                  onChange={largestNumberChangeHandler}
+                />
+              </div>
+
+              <div>
+                <br></br>
+                <input type="submit" value="Apply" />
+              </div>
+            </Card>
+          </div>
+        </form>
+      )}
       {props.newGame == false && (
         <Card className="question">
           <p>{question} = ?</p>
