@@ -25,6 +25,10 @@ const AnswerForm = (props) => {
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
+        // Add user-answer data to response.
+        data.questionAnswered = true;
+        data.userAnswer = enteredAnswer;
+        // Send it upward.
         props.onUpdateGameState(data);
       })
       .catch((error) => console.log("Form submit error", error));
