@@ -5,7 +5,7 @@ import "./Question.css";
 const Question = (props) => {
   const [question, setQuestion] = useState("...");
   const [questionType, setQuestionType] = useState("Multiplication");
-  const [smallestNumber, setSmallestNumber] = useState(0);
+  const [smallestNumber, setSmallestNumber] = useState(1);
   const [largestNumber, setLargestNumber] = useState(1000);
 
   const nextQuestionClickedHandler = () => {
@@ -94,7 +94,11 @@ const Question = (props) => {
 
               <div>
                 <br></br>
-                <input type="submit" value="Apply" />
+                <input
+                  type="submit"
+                  value="Apply"
+                  disabled={!questionType || !smallestNumber || !largestNumber}
+                />
               </div>
             </Card>
           </div>
