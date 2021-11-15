@@ -54,7 +54,9 @@ const AnswerForm = (props) => {
           />
         </div>
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={!enteredAnswer}>
+            Submit
+          </button>
         </div>
       </Card>
     </form>
