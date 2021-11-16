@@ -66,7 +66,13 @@ def generate_question() -> Dict:
 
     # Serializes object into a dict so it is JSON serializable
     session['question'] = question.__dict__
-    return {'question': str(question)}
+    return {
+        'question': str(question),
+        'operand1': question.operand1,
+        'operand2': question.operand2,
+        'operator': question.operator,
+        'answer': question.answer,
+    }
 
 
 @bp.post('/api/answer')
