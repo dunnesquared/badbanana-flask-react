@@ -43,36 +43,48 @@ def get_score_lives():
 @bp.post('/api/question')
 def generate_question() -> Dict:
     """Gets a random arithmetic question."""
+    if not (request_data := request.get_json()):
+        return {
+            'success': False,
+            'err_message': "No payload with request."
+        }
 
-    # Parse JSON data from request
-    request_data = request.get_json()
-    question_type = request_data['questionType']
-    lowerbound = int(request_data['smallestNumber'])
-    upperbound = int(request_data['largestNumber'])
-    print(question_type, lowerbound, upperbound)
+    # Parse JSON data from request.
+    try:
+        question_type = request_data['questionType']
+        lowerbound = int(request_data['smallestNumber'])
+        upperbound = int(request_data['largestNumber'])
+        print(question_type, lowerbound, upperbound)
 
-    # Default player required if you're going to instantiate a Game object.
-    game = Game(player=None)
+        # Default player required if you're going to instantiate a Game object.
+        game = Game(player=None)
 
-    # Set up question parameters.
-    game.set_question_bounds(lowerbound, upperbound)
+        # Set up question parameters.
+        game.set_question_bounds(lowerbound, upperbound)
 
-    # Allow the user to generate a question with a randomly-selected arithmetic operator
-    if question_type.strip().lower() == 'any':
-        question_type = random.choice(list(game.get_valid_operations()))
+        # Allow the user to generate a question with a randomly-selected arithmetic operator
+        if question_type.strip().lower() == 'any':
+            question_type = random.choice(list(game.get_valid_operations()))
 
-    game.set_question_type(question_type)
-    question = game.get_random_question()
+        game.set_question_type(question_type)
+        question = game.get_random_question()
 
-    # Serializes object into a dict so it is JSON serializable
-    session['question'] = question.__dict__
-    return {
-        'question': str(question),
-        'operand1': question.operand1,
-        'operand2': question.operand2,
-        'operator': question.operator,
-        'answer': question.answer,
-    }
+        # Serializes object into a dict so it is JSON serializable
+        session['question'] = question.__dict__
+        return {
+            'success': True,
+            'question': str(question),
+            'operand1': question.operand1,
+            'operand2': question.operand2,
+            'operator': question.operator,
+            'answer': question.answer,
+        }
+    except (AssertionError, ValueError) as e:
+        return {
+            'success': False,
+            'err_message': str(e)
+        }
+
 
 
 @bp.post('/api/answer')

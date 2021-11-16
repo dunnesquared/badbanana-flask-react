@@ -31,7 +31,7 @@ def test_score_lives_init(client):
     json_data = rv.get_json()
     assert json_data['score'] == 0 and json_data['lives'] == 3
 
-def test_generate_question_good_data(client):
+def test_generate_question_success(client):
     """
     question_type = request_data['questionType']
     lowerbound = int(request_data['smallestNumber'])
