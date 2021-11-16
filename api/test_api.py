@@ -26,7 +26,7 @@ def test_newgame(client):
     assert json_data['score'] == 0 and json_data['lives'] == 3
 
 
-def test_get_score_lives_newgame(client):
+def test_score_lives_init(client):
     rv = client.get('api/score-lives', follow_redirects=True)
     json_data = rv.get_json()
     assert json_data['score'] == 0 and json_data['lives'] == 3
