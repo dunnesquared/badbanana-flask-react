@@ -47,7 +47,7 @@ def generate_question() -> Dict:
         return {
             'success': False,
             'err_message': "No payload with request."
-        }
+        }, 500
 
     # Parse JSON data from request.
     try:
@@ -78,12 +78,12 @@ def generate_question() -> Dict:
             'operand2': question.operand2,
             'operator': question.operator,
             'answer': question.answer,
-        }
+        }, 201
     except (AssertionError, ValueError, TypeError) as e:
         return {
             'success': False,
             'err_message': str(e)
-        }
+        }, 500
 
 
 

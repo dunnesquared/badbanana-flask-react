@@ -50,8 +50,9 @@ def test_generate_question_success(client):
     json_data = rv.get_json()
 
     # Test success
+    assert rv.status_code == 201
     assert json_data['success'] == True
-
+    
     # Test existence of data,
     assert 'question' in json_data
     assert 'operand1' in json_data
@@ -84,4 +85,5 @@ def test_generate_question_failure(client, test_input, expected):
     payload = eval(test_input)
     rv = client.post('/api/question', json=payload)
     json_data = rv.get_json()
+    assert rv.status_code == 500
     assert json_data['success'] == expected
