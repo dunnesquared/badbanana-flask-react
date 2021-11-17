@@ -79,7 +79,7 @@ def generate_question() -> Dict:
             'operator': question.operator,
             'answer': question.answer,
         }
-    except (AssertionError, ValueError) as e:
+    except (AssertionError, ValueError, TypeError) as e:
         return {
             'success': False,
             'err_message': str(e)

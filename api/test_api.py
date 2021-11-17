@@ -31,6 +31,7 @@ def test_score_lives_init(client):
     json_data = rv.get_json()
     assert json_data['score'] == 0 and json_data['lives'] == 3
 
+
 def test_generate_question_success(client):
     """
     question_type = request_data['questionType']
@@ -69,7 +70,18 @@ def test_generate_question_success(client):
     assert json_data['answer'] == eval(json_data['question'])
 
 
+PARAMETERS = [
+    ("{}", False),
+    ("{'questionType': None, 'smallestNumber': None, 'largestNumber': None,}", False),
+    ("{'questionType': 'badtype', 'smallestNumber': 5, 'largestNumber': 10,}", False),
+    ("{'questionType': 'Division', 'smallestNumber': 'x', 'largestNumber': 10,}", False),
+    ("{'questionType': 'Division', 'smallestNumber': 1000, 'largestNumber': 1,}", False),
+]
 
-    
 
-
+@pytest.mark.parametrize("test_input, expected", PARAMETERS)
+def test_generate_question_failure(client, test_input, expected):
+    payload = eval(test_input)
+    rv = client.post('/api/question', json=payload)
+    json_data = rv.get_json()
+    assert json_data['success'] == expected
