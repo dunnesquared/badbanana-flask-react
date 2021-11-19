@@ -54,7 +54,6 @@ def generate_question() -> Dict:
         question_type = request_data['questionType']
         lowerbound = int(request_data['smallestNumber'])
         upperbound = int(request_data['largestNumber'])
-        print(question_type, lowerbound, upperbound)
 
         # Default player required if you're going to instantiate a Game object.
         game = Game(player=None)
@@ -86,21 +85,14 @@ def generate_question() -> Dict:
         }, 500
 
 
-
 @bp.post('/api/answer')
 def submit_answer() -> Dict:
     # Only use this if you want generate a new question
-    print(session)
     qdata = session.get('question', None)
 
     # Retrieve user answer
     request_data = request.get_json()
-    print(request_data)
     user_answer = int(request_data['user_answer'])
-
-    # DEBUG
-    print(qdata)
-    print(user_answer)
 
     # This won't work for division questions.
     question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
