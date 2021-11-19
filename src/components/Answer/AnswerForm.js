@@ -42,25 +42,54 @@ const AnswerForm = (props) => {
     return null;
   }
 
-  return (
-    <form onSubmit={submitHandler}>
-      <Card className="answer-form">
-        <div>
-          <label>Answer</label>
-          <input
-            type="number"
-            value={enteredAnswer}
-            onChange={answerChangeHandler}
-          />
-        </div>
-        <div>
-          <button type="submit" disabled={!enteredAnswer}>
-            Submit
-          </button>
-        </div>
-      </Card>
-    </form>
-  );
+  if (!props.isDivisionQuestion) {
+    return (
+      <form onSubmit={submitHandler}>
+        <Card className="answer-form">
+          <div>
+            <label>Answer</label>
+            <br></br>
+
+            <input
+              type="number"
+              value={enteredAnswer}
+              onChange={answerChangeHandler}
+            />
+          </div>
+          <div>
+            <button type="submit" disabled={!enteredAnswer}>
+              Submit
+            </button>
+          </div>
+        </Card>
+      </form>
+    );
+  } else {
+    return (
+      <form onSubmit={submitHandler}>
+        <Card className="answer-form">
+          <div>
+            <label>Quotient</label>
+            <br></br>
+            <input
+              type="number"
+              value={enteredAnswer}
+              onChange={answerChangeHandler}
+            />
+            <br></br>
+            <label>Remainder</label>
+            <br></br>
+            <input type="number" value="5" />
+          </div>
+          <div>
+            <button type="submit" disabled={!enteredAnswer}>
+              Submit
+            </button>
+          </div>
+        </Card>
+      </form>
+    );
+  }
 };
 
 export default AnswerForm;

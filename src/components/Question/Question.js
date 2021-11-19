@@ -47,6 +47,7 @@ const Question = (props) => {
     // Once this button is clicked, game is no longer new.
     props.onUpdateNewGameToFalse();
     getNewQuestionFromAPI();
+    props.onUpdateIsDivisionQuestion(questionType === "Division");
     event.preventDefault();
   };
 

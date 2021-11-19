@@ -24,6 +24,7 @@ function App() {
   const [newGame, setNewGame] = useState(true);
   const [questionAnswered, setQuestionAnswered] = useState(false);
   const [userAnswer, setUserAnswer] = useState(null);
+  const [isDivisionQuestion, setIsDivisionQuestion] = useState(false);
 
   const updateGameState = (gameStateData) => {
     // Debugging
@@ -49,6 +50,11 @@ function App() {
     setQuestionAnswered(false);
   };
 
+  const updateIsDivisionQuestion = (state) => {
+    console.log(`isDivisionQuestion ${state}`);
+    setIsDivisionQuestion(state);
+  };
+
   // Keep this as it fetches the lastest scores from the server
   // if the session is still alive.
   useEffect(() => {
@@ -71,9 +77,14 @@ function App() {
         questionAnswered={questionAnswered}
         onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
         gameOver={gameOver}
+        onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
       />
       {!questionAnswered && (
-        <AnswerForm onUpdateGameState={updateGameState} newGame={newGame} />
+        <AnswerForm
+          onUpdateGameState={updateGameState}
+          newGame={newGame}
+          isDivisionQuestion={isDivisionQuestion}
+        />
       )}
       {questionAnswered && (
         <AnswerResult
