@@ -102,9 +102,9 @@ def submit_answer() -> Dict:
     if not question:
         return {'message': 'No question asked.'}
 
-    correct_answer = question.check_answer(user_answer)
+    answer_correct = question.check_answer(user_answer)
     game_over = False
-    if correct_answer:
+    if answer_correct:
         session['score'] += 1
     else:
         session['lives'] -= 1
@@ -112,10 +112,11 @@ def submit_answer() -> Dict:
             game_over = True
 
     return {
-        'correct_answer': correct_answer,
+        'success': True,
+        'answer_correct': answer_correct,
         'answer': question.answer,
         'game_over': game_over,
         'lives': session['lives'],
         'score': session['score'],
         'new_game': False
-    }
+    }, 201

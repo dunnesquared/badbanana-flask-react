@@ -31,7 +31,7 @@ function App() {
 
     setScore(gameStateData.score);
     setLives(gameStateData.lives);
-    setAnswerCorrect(gameStateData.correct_answer);
+    setAnswerCorrect(gameStateData.answer_correct);
     setGameOver(gameStateData.game_over);
     setAnswer(gameStateData.answer);
     setNewGame(gameStateData.new_game);

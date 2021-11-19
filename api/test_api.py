@@ -52,7 +52,7 @@ def test_generate_question_success(client):
     # Test success
     assert rv.status_code == 201
     assert json_data['success'] == True
-    
+
     # Test existence of data,
     assert 'question' in json_data
     assert 'operand1' in json_data
@@ -87,3 +87,40 @@ def test_generate_question_failure(client, test_input, expected):
     json_data = rv.get_json()
     assert rv.status_code == 500
     assert json_data['success'] == expected
+
+
+def test_submit_answer_good_data(client):
+    # Start new game
+    rv = client.get('/api/new-game', follow_redirects=True)
+    json_data = rv.get_json()
+    assert json_data['score'] == 0 and json_data['lives'] == 3
+
+    # Generate question.
+    qtype = 'Multiplication'
+    nsmallest = 5
+    nlargest = 5
+    payload = {'questionType': qtype,
+               'smallestNumber': nsmallest, 'largestNumber': nlargest, }
+    rv = client.post('/api/question', json=payload)
+    json_data = rv.get_json()
+    assert rv.status_code == 201
+    assert json_data['success'] == True
+
+    # Answer the question.
+    payload = {'user_answer': 25}
+    rv = client.post('/api/answer', json=payload)
+    json_data = rv.get_json()
+    assert rv.status_code == 201
+    assert json_data['success'] == True
+    assert json_data['answer_correct'] == True
+    assert json_data['answer'] == 25
+    assert json_data['game_over'] == False
+    assert json_data['lives'] == 3
+    assert json_data['score'] == 1
+    assert json_data['new_game'] == False
+
+    
+    
+    
+
+
