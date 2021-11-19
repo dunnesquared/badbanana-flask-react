@@ -87,36 +87,49 @@ def generate_question() -> Dict:
 
 @bp.post('/api/answer')
 def submit_answer() -> Dict:
-    # Only use this if you want generate a new question
-    qdata = session.get('question', None)
-
     # Retrieve user answer
-    request_data = request.get_json()
-    user_answer = int(request_data['user_answer'])
+    if not (request_data := request.get_json()):
+        return {
+            'success': False,
+            'err_message': "No payload with request."
+        }, 500
 
-    # This won't work for division questions.
-    question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
-                               operator=qdata['operator'])
+    # Retrieve question from session. Return error if question never asked.
+    if not (qdata := session.get('question', None)):
+        return {
+            'success': False,
+            'err_message': "No question in session memory."
+        }, 500
 
-    # Need to deserialize dict back into object to do actual checking
-    if not question:
-        return {'message': 'No question asked.'}
+    try:
+        user_answer = int(request_data['user_answer'])
 
-    answer_correct = question.check_answer(user_answer)
-    game_over = False
-    if answer_correct:
-        session['score'] += 1
-    else:
-        session['lives'] -= 1
-        if session['lives'] == 0:
-            game_over = True
+        # Recreate question object.
+        question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
+                                   operator=qdata['operator'])
 
-    return {
-        'success': True,
-        'answer_correct': answer_correct,
-        'answer': question.answer,
-        'game_over': game_over,
-        'lives': session['lives'],
-        'score': session['score'],
-        'new_game': False
-    }, 201
+        # Check answer; manage score.
+        answer_correct = question.check_answer(user_answer)
+        game_over = False
+        if answer_correct:
+            session['score'] += 1
+        else:
+            session['lives'] -= 1
+            if session['lives'] == 0:
+                game_over = True
+
+        return {
+            'success': True,
+            'answer_correct': answer_correct,
+            'answer': question.answer,
+            'game_over': game_over,
+            'lives': session['lives'],
+            'score': session['score'],
+            'new_game': False
+        }, 201
+
+    except (AssertionError, ValueError, TypeError) as e:
+        return {
+            'success': False,
+            'err_message': str(e)
+        }, 500
