@@ -77,6 +77,7 @@ def generate_question() -> Dict:
             'operand2': question.operand2,
             'operator': question.operator,
             'answer': question.answer,
+            'question_type': question_type,
         }, 201
     except (AssertionError, ValueError, TypeError) as e:
         return {

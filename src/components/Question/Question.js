@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 
 import Card from "../UI/Card";
 import "./Question.css";
@@ -40,8 +40,12 @@ const Question = (props) => {
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.question);
+        // Update question
         setQuestion(data.question);
+        // Let app know whether a division question returned.
+        props.onUpdateIsDivisionQuestion(
+          data.question_type.toLowerCase() === "division"
+        );
       })
       .catch((error) => console.log("Question Form Submit Error", error));
   };
@@ -50,7 +54,6 @@ const Question = (props) => {
     // Once this button is clicked, game is no longer new.
     props.onUpdateNewGameToFalse();
     getNewQuestionFromAPI();
-    props.onUpdateIsDivisionQuestion(questionType === "Division");
     event.preventDefault();
   };
 
