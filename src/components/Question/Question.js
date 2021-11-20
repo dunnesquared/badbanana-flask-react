@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+
+import Button from 'react-bootstrap/Button';
+
 import Card from "../UI/Card";
 import "./Question.css";
 
@@ -109,7 +112,7 @@ const Question = (props) => {
         <Card className="question">
           <p>{question} = ?</p>
           {!props.gameOver && props.questionAnswered && (
-            <button onClick={nextQuestionClickedHandler}>Next Question</button>
+            <Button onClick={nextQuestionClickedHandler}>Next Question</Button>
           )}
         </Card>
       )}
