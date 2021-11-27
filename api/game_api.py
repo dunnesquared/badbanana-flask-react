@@ -102,15 +102,17 @@ def submit_answer() -> Dict:
             'err_message': "No question in session memory."
         }, 500
 
+    print(request_data)
+    
     try:
-        user_answer = int(request_data['user_answer'])
+        user_answer1 = int(request_data['user_answer1'])
 
         # Recreate question object.
         question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
                                    operator=qdata['operator'])
 
         # Check answer; manage score.
-        answer_correct = question.check_answer(user_answer)
+        answer_correct = question.check_answer(user_answer1)
         game_over = False
         if answer_correct:
             session['score'] += 1

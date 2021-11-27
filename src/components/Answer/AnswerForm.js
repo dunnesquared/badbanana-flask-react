@@ -5,20 +5,36 @@ import "./AnswerForm.css";
 
 const AnswerForm = (props) => {
   const [enteredAnswer, setEnteredAnswer] = useState("");
+  const [enteredAnswer2, setEnteredAnswer2] = useState("");
 
   const answerChangeHandler = (event) => {
     setEnteredAnswer(event.target.value);
+  };
+
+  const answer2ChangeHandler = (event) => {
+    setEnteredAnswer2(event.target.value);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
 
     const url = "/api/answer";
-    const user_answer = enteredAnswer;
+    const is_division_question = props.isDivisionQuestion;
+    const user_answer1 = enteredAnswer;
+    const user_answer2 = enteredAnswer2;
+    let payload = {};
+    if (!is_division_question) {
+      payload = { is_division_question, user_answer1 };
+    } else {
+      payload = { is_division_question, user_answer1, user_answer2 };
+    }
+
+    // const user_answers = {userAnswer1: null, userAnswer2: null}
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_answer }),
+      body: JSON.stringify(payload),
+      // body: JSON.stringify({ user_answer, user_answers }),
     };
 
     // Submit answer.
@@ -79,7 +95,11 @@ const AnswerForm = (props) => {
             <br></br>
             <label>Remainder</label>
             <br></br>
-            <input type="number" value="5" />
+            <input
+              type="number"
+              value={enteredAnswer2}
+              onChange={answer2ChangeHandler}
+            />
           </div>
           <div>
             <button type="submit" disabled={!enteredAnswer}>
