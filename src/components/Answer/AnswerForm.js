@@ -40,11 +40,6 @@ const AnswerForm = (props) => {
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
-<<<<<<< HEAD
-        props.onUpdateGameState(data);
-||||||| 0b59838
-        props.onUpdateGameState(data);  
-=======
         // Add user-answer data to response.
         data.questionAnswered = true;
 
@@ -59,7 +54,6 @@ const AnswerForm = (props) => {
 
         // Send it upward.
         props.onUpdateGameState(data);
->>>>>>> dev
       })
       .catch((error) => console.log("Form submit error", error));
 
@@ -72,41 +66,6 @@ const AnswerForm = (props) => {
     return null;
   }
 
-<<<<<<< HEAD
-  return (
-    <form onSubmit={submitHandler}>
-      <Card className="answer-form">
-        <div>
-          <label>Answer</label>
-          <input
-            type="number"
-            value={enteredAnswer}
-            onChange={answerChangeHandler}
-          />
-        </div>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </Card>
-    </form>
-  );
-||||||| 0b59838
-  return (
-    <form onSubmit={submitHandler}>
-      <div>
-        <label>Answer</label>
-        <input
-          type="number"
-          value={enteredAnswer}
-          onChange={answerChangeHandler}
-        />
-      </div>
-      <div>
-        <button type="submit">Submit</button>
-      </div>
-    </form>
-  );
-=======
   if (!props.isDivisionQuestion) {
     return (
       <form onSubmit={submitHandler}>
@@ -159,7 +118,6 @@ const AnswerForm = (props) => {
       </form>
     );
   }
->>>>>>> dev
 };
 
 export default AnswerForm;

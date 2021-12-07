@@ -15,23 +15,6 @@ const NewGame = (props) => {
         .then((data) => {
           console.log("score:", data.score, "lives:", data.lives);
           const newGameData = {
-<<<<<<< HEAD
-            score: data.score,
-            lives: data.lives,
-            correct_answer: null,
-            game_over: false,
-            answer: "",
-            new_game: true,
-          };
-||||||| 0b59838
-              score: data.score,
-              lives: data.lives,
-              correct_answer: null,
-              game_over: false,
-              answer: "", 
-              new_game: true
-          }
-=======
             score: data.score,
             lives: data.lives,
             answer_correct: null,
@@ -39,7 +22,6 @@ const NewGame = (props) => {
             answer: "",
             new_game: true,
           };
->>>>>>> dev
           props.onUpdateGameState(newGameData);
         });
     } else {

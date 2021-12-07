@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-.new-game {
-        margin: 2rem auto;
-        padding: 1rem;
-        width: 50rem; 
-        max-width:95rem;
-        background-color:aliceblue;
-        text-align: center;
-}
-||||||| 0b59838
-=======
 .new-game {
         margin: 1rem auto;
         padding: 1rem;
@@ -17,4 +6,3 @@
         background-color:aliceblue;
         text-align: center;
 }
->>>>>>> dev
