@@ -34,7 +34,6 @@ const AnswerForm = (props) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
-      // body: JSON.stringify({ user_answer, user_answers }),
     };
 
     // Submit answer.
@@ -43,7 +42,16 @@ const AnswerForm = (props) => {
       .then((data) => {
         // Add user-answer data to response.
         data.questionAnswered = true;
-        data.userAnswer = enteredAnswer;
+
+        // Need to pass back user's quotient and remainder answers for division questions.
+        if (props.isDivisionQuestion) {
+          const combinedAnswer = `Quotient: ${user_answer1},\ 
+            Remainder: ${user_answer2}`;
+          data.userAnswer = combinedAnswer;
+        } else {
+          data.userAnswer = enteredAnswer;
+        }
+
         // Send it upward.
         props.onUpdateGameState(data);
       })

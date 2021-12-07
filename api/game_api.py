@@ -5,7 +5,7 @@ from flask import Blueprint, session, request
 
 from .badbanana.game import Game
 from .badbanana.player import Player
-from .badbanana.question.questions import IntegerQuestion
+from .badbanana.question.questions import IntegerQuestion, DivisionQuestion
 
 
 bp = Blueprint("api", __name__)
@@ -102,17 +102,25 @@ def submit_answer() -> Dict:
             'err_message': "No question in session memory."
         }, 500
 
-    print(request_data)
-    
     try:
+        # Fetch answer/quotient.
         user_answer1 = int(request_data['user_answer1'])
 
-        # Recreate question object.
-        question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
-                                   operator=qdata['operator'])
+        # Because integer division returns a quotient and remainder.
+        # the operation needs to be handled differently from other arithmetic.
+        is_division_question = request_data['is_division_question']
+        if not is_division_question:
+            question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
+                                       operator=qdata['operator'])
+            answer_correct = question.check_answer(user_answer1)
+        else:
+            # Fetch remainder.
+            user_answer2 = int(request_data['user_answer2'])
+            question = DivisionQuestion(
+                operand1=qdata['operand1'], operand2=qdata['operand2'])
+            answer_correct = question.check_answer(user_answer1, user_answer2)
 
         # Check answer; manage score.
-        answer_correct = question.check_answer(user_answer1)
         game_over = False
         if answer_correct:
             session['score'] += 1
@@ -121,10 +129,11 @@ def submit_answer() -> Dict:
             if session['lives'] == 0:
                 game_over = True
 
+        # Send back response.
         return {
             'success': True,
             'answer_correct': answer_correct,
-            'answer': question.answer,
+            'answer': question.get_right_answer(),
             'game_over': game_over,
             'lives': session['lives'],
             'score': session['score'],
@@ -132,6 +141,7 @@ def submit_answer() -> Dict:
         }, 201
 
     except (AssertionError, ValueError, TypeError) as e:
+        print(f"Exception raised: {str(e)}")
         return {
             'success': False,
             'err_message': str(e)

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 // import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import Title from "./components/Title/Title";
 import Instructions from "./components/Instructions/Instructions";
@@ -35,10 +35,18 @@ function App() {
     setLives(gameStateData.lives);
     setAnswerCorrect(gameStateData.answer_correct);
     setGameOver(gameStateData.game_over);
-    setAnswer(gameStateData.answer);
     setNewGame(gameStateData.new_game);
     setQuestionAnswered(gameStateData.questionAnswered);
     setUserAnswer(gameStateData.userAnswer);
+
+    // Need to show both quotient and remainder for division questions.
+    if (isDivisionQuestion) {
+      const combinedAnswer = `Quotient: ${gameStateData.answer.quotient},\
+        Remainder: ${gameStateData.answer.remainder}`;
+      setAnswer(combinedAnswer);
+    } else {
+      setAnswer(gameStateData.answer);
+    }
   };
 
   const updateNewGameToFalse = () => {
