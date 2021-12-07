@@ -17,7 +17,7 @@ const NewGame = (props) => {
           const newGameData = {
             score: data.score,
             lives: data.lives,
-            correct_answer: null,
+            answer_correct: null,
             game_over: false,
             answer: "",
             new_game: true,

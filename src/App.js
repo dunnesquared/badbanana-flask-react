@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 // import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import Title from "./components/Title/Title";
 import Instructions from "./components/Instructions/Instructions";
@@ -22,6 +23,9 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [answer, setAnswer] = useState("");
   const [newGame, setNewGame] = useState(true);
+  const [questionAnswered, setQuestionAnswered] = useState(false);
+  const [userAnswer, setUserAnswer] = useState(null);
+  const [isDivisionQuestion, setIsDivisionQuestion] = useState(false);
 
   const updateGameState = (gameStateData) => {
     // Debugging
@@ -29,15 +33,35 @@ function App() {
 
     setScore(gameStateData.score);
     setLives(gameStateData.lives);
-    setAnswerCorrect(gameStateData.correct_answer);
+    setAnswerCorrect(gameStateData.answer_correct);
     setGameOver(gameStateData.game_over);
-    setAnswer(gameStateData.answer);
     setNewGame(gameStateData.new_game);
+    setQuestionAnswered(gameStateData.questionAnswered);
+    setUserAnswer(gameStateData.userAnswer);
+
+    // Need to show both quotient and remainder for division questions.
+    if (isDivisionQuestion) {
+      const combinedAnswer = `Quotient: ${gameStateData.answer.quotient},\
+        Remainder: ${gameStateData.answer.remainder}`;
+      setAnswer(combinedAnswer);
+    } else {
+      setAnswer(gameStateData.answer);
+    }
   };
 
   const updateNewGameToFalse = () => {
-    console.log("fgfdgfdgdf");
+    console.log("newGame set to false.");
     setNewGame(false);
+  };
+
+  const updateQuestionAnsweredToFalse = () => {
+    console.log("questionAnswered set to false.");
+    setQuestionAnswered(false);
+  };
+
+  const updateIsDivisionQuestion = (state) => {
+    console.log(`isDivisionQuestion ${state}`);
+    setIsDivisionQuestion(state);
   };
 
   // Keep this as it fetches the lastest scores from the server
@@ -55,21 +79,29 @@ function App() {
     <div>
       <Title title={title} />
       <Instructions />
+      <ScoreLives score={score} lives={lives} />
       <Question
         newGame={newGame}
         onUpdateNewGameToFalse={updateNewGameToFalse}
+        questionAnswered={questionAnswered}
+        onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
+        gameOver={gameOver}
+        onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
       />
-      <AnswerForm
-        onUpdateGameState={updateGameState}
-        newGame={newGame}
-        onUpdateNewGameToFalse={updateNewGameToFalse}
-      />
-      <AnswerResult
-        answerCorrect={answerCorrect}
-        answer={answer}
-      />
-
-      <ScoreLives score={score} lives={lives} />
+      {!questionAnswered && (
+        <AnswerForm
+          onUpdateGameState={updateGameState}
+          newGame={newGame}
+          isDivisionQuestion={isDivisionQuestion}
+        />
+      )}
+      {questionAnswered && (
+        <AnswerResult
+          answerCorrect={answerCorrect}
+          answer={answer}
+          userAnswer={userAnswer}
+        />
+      )}
       {gameOver && <GameOver />}
       {gameOver && <NewGame onUpdateGameState={updateGameState} />}
     </div>

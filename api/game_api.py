@@ -5,7 +5,7 @@ from flask import Blueprint, session, request
 
 from .badbanana.game import Game
 from .badbanana.player import Player
-from .badbanana.question.questions import IntegerQuestion
+from .badbanana.question.questions import IntegerQuestion, DivisionQuestion
 
 
 bp = Blueprint("api", __name__)
@@ -43,69 +43,106 @@ def get_score_lives():
 @bp.post('/api/question')
 def generate_question() -> Dict:
     """Gets a random arithmetic question."""
+    if not (request_data := request.get_json()):
+        return {
+            'success': False,
+            'err_message': "No payload with request."
+        }, 500
 
-    # Parse JSON data from request
-    request_data = request.get_json()
-    question_type = request_data['questionType']
-    lowerbound = int(request_data['smallestNumber'])
-    upperbound = int(request_data['largestNumber'])
-    print(question_type, lowerbound, upperbound)
+    # Parse JSON data from request.
+    try:
+        question_type = request_data['questionType']
+        lowerbound = int(request_data['smallestNumber'])
+        upperbound = int(request_data['largestNumber'])
 
-    # Default player required if you're going to instantiate a Game object.
-    game = Game(player=None)
+        # Default player required if you're going to instantiate a Game object.
+        game = Game(player=None)
 
-    # Set up question parameters.
-    game.set_question_bounds(lowerbound, upperbound)
+        # Set up question parameters.
+        game.set_question_bounds(lowerbound, upperbound)
 
-    # Allow the user to generate a question with a randomly-selected arithmetic operator
-    if question_type.strip().lower() == 'any':
-        question_type = random.choice(list(game.get_valid_operations()))
+        # Allow the user to generate a question with a randomly-selected arithmetic operator
+        if question_type.strip().lower() == 'any':
+            question_type = random.choice(list(game.get_valid_operations()))
 
-    game.set_question_type(question_type)
-    question = game.get_random_question()
+        game.set_question_type(question_type)
+        question = game.get_random_question()
 
-    # Serializes object into a dict so it is JSON serializable
-    session['question'] = question.__dict__
-    return {'question': str(question)}
+        # Serializes object into a dict so it is JSON serializable
+        session['question'] = question.__dict__
+        return {
+            'success': True,
+            'question': str(question),
+            'operand1': question.operand1,
+            'operand2': question.operand2,
+            'operator': question.operator,
+            'answer': question.answer,
+            'question_type': question_type,
+        }, 201
+    except (AssertionError, ValueError, TypeError) as e:
+        return {
+            'success': False,
+            'err_message': str(e)
+        }, 500
 
 
 @bp.post('/api/answer')
 def submit_answer() -> Dict:
-    # Only use this if you want generate a new question
-    print(session)
-    qdata = session.get('question', None)
-
     # Retrieve user answer
-    request_data = request.get_json()
-    print(request_data)
-    user_answer = int(request_data['user_answer'])
+    if not (request_data := request.get_json()):
+        return {
+            'success': False,
+            'err_message': "No payload with request."
+        }, 500
 
-    # DEBUG
-    print(qdata)
-    print(user_answer)
+    # Retrieve question from session. Return error if question never asked.
+    if not (qdata := session.get('question', None)):
+        return {
+            'success': False,
+            'err_message': "No question in session memory."
+        }, 500
 
-    # This won't work for division questions.
-    question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
-                               operator=qdata['operator'])
+    try:
+        # Fetch answer/quotient.
+        user_answer1 = int(request_data['user_answer1'])
 
-    # Need to deserialize dict back into object to do actual checking
-    if not question:
-        return {'message': 'No question asked.'}
+        # Because integer division returns a quotient and remainder.
+        # the operation needs to be handled differently from other arithmetic.
+        is_division_question = request_data['is_division_question']
+        if not is_division_question:
+            question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
+                                       operator=qdata['operator'])
+            answer_correct = question.check_answer(user_answer1)
+        else:
+            # Fetch remainder.
+            user_answer2 = int(request_data['user_answer2'])
+            question = DivisionQuestion(
+                operand1=qdata['operand1'], operand2=qdata['operand2'])
+            answer_correct = question.check_answer(user_answer1, user_answer2)
 
-    correct_answer = question.check_answer(user_answer)
-    game_over = False
-    if correct_answer:
-        session['score'] += 1
-    else:
-        session['lives'] -= 1
-        if session['lives'] == 0:
-            game_over = True
+        # Check answer; manage score.
+        game_over = False
+        if answer_correct:
+            session['score'] += 1
+        else:
+            session['lives'] -= 1
+            if session['lives'] == 0:
+                game_over = True
 
-    return {
-        'correct_answer': correct_answer,
-        'answer': question.answer,
-        'game_over': game_over,
-        'lives': session['lives'],
-        'score': session['score'],
-        'new_game': False
-    }
+        # Send back response.
+        return {
+            'success': True,
+            'answer_correct': answer_correct,
+            'answer': question.get_right_answer(),
+            'game_over': game_over,
+            'lives': session['lives'],
+            'score': session['score'],
+            'new_game': False
+        }, 201
+
+    except (AssertionError, ValueError, TypeError) as e:
+        print(f"Exception raised: {str(e)}")
+        return {
+            'success': False,
+            'err_message': str(e)
+        }, 500
