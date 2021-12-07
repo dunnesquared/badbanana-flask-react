@@ -89,38 +89,92 @@ def test_generate_question_failure(client, test_input, expected):
     assert json_data['success'] == expected
 
 
-def test_submit_answer_good_data(client):
+PARAMETERS = [
+    # Test 1: Non-division question, right answer
+    (str({'question_payload': {'questionType': 'Multiplication', 'smallestNumber': 5,
+                               'largestNumber': 5},
+          'answer_payload': {'user_answer1': 25, 'is_division_question': False}}),
+        {'status_code': 201,
+         'data': {
+             'success': True,
+             'answer_correct': True,
+             'answer': 25,
+             'game_over': False,
+             'lives': 3,
+             'score': 1,
+             'new_game': False,
+         }
+         }),
+    # Test 2: Division question, right answer
+    (str({'question_payload': {'questionType': 'Division', 'smallestNumber': 5,
+                               'largestNumber': 5},
+          'answer_payload': {'user_answer1': 1, 'user_answer2': 0,
+                             'is_division_question': True}}),
+        {'status_code': 201,
+         'data': {
+             'success': True,
+             'answer_correct': True,
+             'answer': {'quotient': 1, 'remainder': 0},
+             'game_over': False,
+             'lives': 3,
+             'score': 1,
+             'new_game': False,
+         }
+         }),
+    # Test 3: Non-division question, wrong answer
+    (str({'question_payload': {'questionType': 'Addition', 'smallestNumber': 5,
+                               'largestNumber': 5},
+          'answer_payload': {'user_answer1': 11, 'is_division_question': False}}),
+        {'status_code': 201,
+         'data': {
+             'success': True,
+             'answer_correct': False,
+             'answer': 10,
+             'game_over': False,
+             'lives': 2,
+             'score': 0,
+             'new_game': False,
+         }
+         }),
+    # Test 4: Division question, wrong answer
+    (str({'question_payload': {'questionType': 'Division', 'smallestNumber': 5,
+                               'largestNumber': 5},
+          'answer_payload': {'user_answer1': 0, 'user_answer2': 1,
+                             'is_division_question': True}}),
+        {'status_code': 201,
+         'data': {
+             'success': True,
+             'answer_correct': False,
+             'answer': {'quotient': 1, 'remainder': 0},
+             'game_over': False,
+             'lives': 2,
+             'score': 0,
+             'new_game': False,
+         }
+         }),
+
+]
+
+
+@pytest.mark.parametrize("test_input, expected", PARAMETERS)
+def test_submit_answer_success(client, test_input, expected):
     # Start new game
     rv = client.get('/api/new-game', follow_redirects=True)
     json_data = rv.get_json()
     assert json_data['score'] == 0 and json_data['lives'] == 3
 
     # Generate question.
-    qtype = 'Multiplication'
-    nsmallest = 5
-    nlargest = 5
-    payload = {'questionType': qtype,
-               'smallestNumber': nsmallest, 'largestNumber': nlargest, }
+    payload = eval(test_input)['question_payload']
     rv = client.post('/api/question', json=payload)
     json_data = rv.get_json()
     assert rv.status_code == 201
     assert json_data['success'] == True
 
     # Answer the question.
-    payload = {'user_answer': 25}
+    payload = eval(test_input)['answer_payload']
     rv = client.post('/api/answer', json=payload)
     json_data = rv.get_json()
-    assert rv.status_code == 201
-    assert json_data['success'] == True
-    assert json_data['answer_correct'] == True
-    assert json_data['answer'] == 25
-    assert json_data['game_over'] == False
-    assert json_data['lives'] == 3
-    assert json_data['score'] == 1
-    assert json_data['new_game'] == False
-
-    
-    
-    
+    assert rv.status_code == expected['status_code']
+    assert json_data == expected['data']
 
 
