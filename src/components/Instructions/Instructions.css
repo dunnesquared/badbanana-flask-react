@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .instructions {
     margin: 2rem auto;
     padding: 1rem;
@@ -5,3 +6,13 @@
     max-width:95rem;
     background-color:aliceblue;
 }
+||||||| 0b59838
+=======
+.instructions {
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 50rem; 
+    max-width:95rem;
+    background-color:aliceblue;
+}
+>>>>>>> dev
