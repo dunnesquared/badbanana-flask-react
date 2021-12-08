@@ -54,6 +54,14 @@ const Question = (props) => {
     // Once this button is clicked, game is no longer new.
     props.onUpdateNewGameToFalse();
     getNewQuestionFromAPI();
+
+    // You'll want to show the answer form if you've
+    // just answered a question, but changed the question
+    // parameters.
+    if (props.questionAnswered) {
+      props.onUpdateQuestionAnsweredToFalse();
+    }
+
     event.preventDefault();
   };
 
