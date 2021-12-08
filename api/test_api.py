@@ -152,7 +152,6 @@ PARAMETERS = [
              'new_game': False,
          }
          }),
-
 ]
 
 
@@ -178,3 +177,80 @@ def test_submit_answer_success(client, test_input, expected):
     assert json_data == expected['data']
 
 
+PARAMETERS = [
+    # Test 1: No question generated.
+    (str({'question_payload': {},
+         'answer_payload': {'user_answer1': 11, 'is_division_question': False}}),
+        {'status_code': 500,
+         'data': {'success': False, 'err_message': "No question in session memory.", }
+         }),
+    # Test 2: Question generated but bad data passed.
+    (str({'question_payload': {'questionType': 'Multiplication', 'smallestNumber': 5, 'largestNumber': 5},
+         'answer_payload': {'user_answer1': 'fart', 'is_division_question': False}}),
+        {'status_code': 500,
+         'data': {'success': False}
+         }),
+    # Test 3: Question generated but bad data passed.
+    (str({'question_payload': {'questionType': 'Division', 'smallestNumber': 5, 'largestNumber': 5},
+         'answer_payload': {'user_answer1': 1, 'user_answer2': 'fart', 'is_division_question': True}}),
+        {'status_code': 500,
+         'data': {'success': False}
+         }),
+    # Test 4: Question generated but no data passed.
+    (str({'question_payload': {'questionType': 'Division', 'smallestNumber': 5, 'largestNumber': 5},
+         'answer_payload': None}),
+        {'status_code': 500,
+         'data': {'success': False}
+         }),
+    # Test 5: Pretending you're answering a non-division question when really it should be
+    # a division question.
+    (str({'question_payload': {'questionType': 'Division', 'smallestNumber': 5, 'largestNumber': 5},
+         'answer_payload': {'user_answer1': 1, 'user_answer2': 0, 'is_division_question': False}}),
+        {'status_code': 500,
+         'data': {'success': False}
+         }),
+    # Test 6: Pretending you're answering a division question when really it's not.
+    (str({'question_payload': {'questionType': 'Subtraction', 'smallestNumber': 5, 'largestNumber': 5},
+         'answer_payload': {'user_answer1': 0, 'user_answer2': 0, 'is_division_question': True}}),
+        {'status_code': 500,
+         'data': {'success': False}
+         }),
+    # Test 7: Division question with missing answer data.
+    (str({'question_payload': {'questionType': 'Division', 'smallestNumber': 5, 'largestNumber': 5},
+         'answer_payload': {'user_answer1': 1, 'user_answer2': 0, 'is_division_question': None}}),
+        {'status_code': 500,
+         'data': {'success': False}
+         }),
+]
+
+
+@pytest.mark.parametrize("test_input, expected", PARAMETERS)
+def test_submit_answer_failure(client, test_input, expected):
+    # Start new game
+    rv = client.get('/api/new-game', follow_redirects=True)
+    json_data = rv.get_json()
+    assert json_data['score'] == 0 and json_data['lives'] == 3
+
+    # Try submitting an answer if there in no question in session memory.
+    if not eval(test_input)['question_payload']:
+        payload = eval(test_input)['answer_payload']
+        rv = client.post('/api/answer', json=payload)
+        json_data = rv.get_json()
+        assert rv.status_code == expected['status_code']
+        assert json_data == expected['data']
+    else:
+        # Generate question.
+        payload = eval(test_input)['question_payload']
+        rv = client.post('/api/question', json=payload)
+        json_data = rv.get_json()
+        print(json_data)
+        assert rv.status_code == 201
+        assert json_data['success'] == True
+
+        # Answer the question.
+        payload = eval(test_input)['answer_payload']
+        rv = client.post('/api/answer', json=payload)
+        json_data = rv.get_json()
+        print(json_data)
+        assert rv.status_code == expected['status_code']
+        assert json_data['success'] == expected['data']['success']

@@ -109,11 +109,28 @@ def submit_answer() -> Dict:
         # Because integer division returns a quotient and remainder.
         # the operation needs to be handled differently from other arithmetic.
         is_division_question = request_data['is_division_question']
-        if not is_division_question:
+
+        # An absence for a value should be taken to be the same as False.
+        if is_division_question is None:
+            raise ValueError("is_division_question cannot be None.")
+
+        if is_division_question is False:
+            # Current design allows for the unwanted scenario of saying the answer
+            # data is not for a division question, even if a division question
+            # was indeed the one asked by the server.
+            if qdata['operator'] == '//':
+                raise ValueError("Conflict: is_division_question is False, but question in"
+                                 "session memory is division question.")
+
             question = IntegerQuestion(operand1=qdata['operand1'], operand2=qdata['operand2'],
                                        operator=qdata['operator'])
             answer_correct = question.check_answer(user_answer1)
         else:
+            # Same principle as above.
+            if qdata['operator'] != '//':
+                raise ValueError("Conflict: is_division_question is True, but question in"
+                                 "session memory is a non-division question.")
+
             # Fetch remainder.
             user_answer2 = int(request_data['user_answer2'])
             question = DivisionQuestion(
