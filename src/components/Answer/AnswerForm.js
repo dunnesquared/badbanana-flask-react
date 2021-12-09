@@ -29,7 +29,6 @@ const AnswerForm = (props) => {
       payload = { is_division_question, user_answer1, user_answer2 };
     }
 
-    // const user_answers = {userAnswer1: null, userAnswer2: null}
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,7 +44,7 @@ const AnswerForm = (props) => {
 
         // Need to pass back user's quotient and remainder answers for division questions.
         if (props.isDivisionQuestion) {
-          const combinedAnswer = `Quotient: ${user_answer1},\ 
+          const combinedAnswer = `Quotient: ${user_answer1}, 
             Remainder: ${user_answer2}`;
           data.userAnswer = combinedAnswer;
         } else {

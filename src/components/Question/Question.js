@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import Button from "react-bootstrap/Button";
 
@@ -123,7 +123,7 @@ const Question = (props) => {
           </div>
         </form>
       )}
-      {props.newGame == false && (
+      {props.newGame === false && (
         <Card className="question">
           <p>{question} = ?</p>
           {!props.gameOver && props.questionAnswered && (
