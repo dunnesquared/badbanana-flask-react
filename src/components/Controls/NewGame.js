@@ -4,26 +4,11 @@ import Card from "../UI/Card";
 const NewGame = (props) => {
   const clickHandler = () => {
     console.log("Restart game!");
-    if (
-      window.confirm(
-        "Are you sure you want to restart game? Your score will be reset to zero."
-      )
-    ) {
-      console.log("Score and lives reset!");
-      fetch("/api/new-game")
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("score:", data.score, "lives:", data.lives);
-          const newGameData = {
-            score: data.score,
-            lives: data.lives,
-            answer_correct: null,
-            game_over: false,
-            answer: "",
-            new_game: true,
-          };
-          props.onUpdateGameState(newGameData);
-        });
+    const msg =
+      "Are you sure you want to restart the game? Your score will be reset to zero.";
+    if (window.confirm(msg)) {
+      // Refreshing the window is the easiest way to reset game parameters.
+      window.location.reload();
     } else {
       console.log("Game restart cancelled!");
     }
@@ -32,7 +17,7 @@ const NewGame = (props) => {
   return (
     <div>
       <Card className="new-game">
-      <button onClick={clickHandler}>New Game</button>
+        <button onClick={clickHandler}>New Game</button>
       </Card>
     </div>
   );

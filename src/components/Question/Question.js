@@ -6,10 +6,14 @@ import Card from "../UI/Card";
 import "./Question.css";
 
 const Question = (props) => {
+  // Default interval for operand values
+  const numFrom = 1;
+  const numTo = 10;
+
   const [question, setQuestion] = useState("...");
   const [questionType, setQuestionType] = useState("Multiplication");
-  const [smallestNumber, setSmallestNumber] = useState(1);
-  const [largestNumber, setLargestNumber] = useState(1000);
+  const [smallestNumber, setSmallestNumber] = useState(numFrom);
+  const [largestNumber, setLargestNumber] = useState(numTo);
 
   const nextQuestionClickedHandler = () => {
     console.log("Next Question clicked!");
