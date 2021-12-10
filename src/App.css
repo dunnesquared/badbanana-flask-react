@@ -3,8 +3,11 @@
   margin: 1rem auto;
   width: 50rem; 
   max-width:95rem;
-  background-color:rgb(243, 255, 240);
+  /* background-color:rgb(243, 255, 240); */
+  background-image: url(./img/white-lotus-wall-paper-cheetah.png)
 };
+
+
 
 /* .App {
   text-align: center;
