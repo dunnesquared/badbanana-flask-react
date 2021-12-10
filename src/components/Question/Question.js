@@ -33,6 +33,29 @@ const Question = (props) => {
     setLargestNumber(event.target.value);
   };
 
+  const createQuestionString = (operand1, operand2, operator) => {
+    let question = null;
+    switch (operator) {
+      case "*":
+        question = `${operand1} × ${operand2}`;
+        break;
+      case "+":
+        question = `${operand1} + ${operand2}`;
+        break;
+      case "-":
+        question = `${operand1} - ${operand2}`;
+        break;
+      case "//":
+        question = `${operand1} ÷ ${operand2}`;
+        break;
+      default:
+        console.error(
+          "Unable to create question string: Operator character not recognized!"
+        );
+    }
+    return question;
+  };
+
   const getNewQuestionFromAPI = () => {
     const url = "api/question";
     const requestOptions = {
@@ -44,8 +67,16 @@ const Question = (props) => {
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
-        // Update question
-        setQuestion(data.question);
+        // Question string in response uses special characters for arithmetic
+        // e.g. * for times, // for integer division.
+        // Convert them into something more human-readable.
+        const questionString = createQuestionString(
+          data.operand1,
+          data.operand2,
+          data.operator
+        );
+        setQuestion(questionString);
+        // setQuestion(data.question);
         // Let app know whether a division question returned.
         props.onUpdateIsDivisionQuestion(
           data.question_type.toLowerCase() === "division"
