@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Title from "./components/Title/Title";
@@ -11,7 +12,7 @@ import NewGame from "./components/Controls/NewGame";
 import GameOver from "./components/GameOver/GameOver";
 import Card from "./components/UI/Card";
 
-import './App.css';
+import "./App.css";
 
 function App() {
   // App title
@@ -78,9 +79,12 @@ function App() {
 
   return (
     <div>
+      <Helmet>
+        <style>{"body { background-color: aquamarine; }"}</style>
+      </Helmet>
       <Title title={title} />
       <Instructions />
-      <Card className='app-card'>
+      <Card className="app-card">
         <ScoreLives score={score} lives={lives} />
         <Question
           newGame={newGame}
