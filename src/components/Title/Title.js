@@ -5,7 +5,7 @@ const Title = (props) => {
   return (
     <div>
       <Card className="game-title">
-        <h1>{props.title}</h1>
+        <div>{props.title}</div>
       </Card>
     </div>
   );

@@ -5,6 +5,9 @@
         max-width:95rem;
         background-color:aliceblue;
         text-align: center;
+        font-weight: 600;
+        font-size: 3em;
+        
 }
 
 .question-form{
@@ -13,4 +16,5 @@
     width: 40rem; 
     max-width:95rem;
     background-color:aliceblue;
+    font-weight: 600;
 }
