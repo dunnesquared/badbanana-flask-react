@@ -82,7 +82,7 @@ function App() {
       <Helmet>
         <style>
           {
-            "body { background-color: aquamarine;" +
+            "body { background-color: cornflowerblue;" +
             "font-family: pt sans, Arial, Helvetica, sans-serif;}"
           }
         </style>
