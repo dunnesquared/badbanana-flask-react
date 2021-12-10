@@ -80,7 +80,12 @@ function App() {
   return (
     <div>
       <Helmet>
-        <style>{"body { background-color: aquamarine; }"}</style>
+        <style>
+          {
+            "body { background-color: aquamarine;" +
+            "font-family: pt sans, Arial, Helvetica, sans-serif;}"
+          }
+        </style>
       </Helmet>
       <Title title={title} />
       <Instructions />
