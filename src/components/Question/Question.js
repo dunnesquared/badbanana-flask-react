@@ -5,8 +5,6 @@ import Button from "react-bootstrap/Button";
 import Card from "../UI/Card";
 import "./Question.css";
 
-import Button from "react-bootstrap/Button";
-
 const Question = (props) => {
   // Default interval for operand values
   const numFrom = 1;
