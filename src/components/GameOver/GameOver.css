@@ -1,8 +1,10 @@
 .game-over {
     margin: 1rem auto;
     padding: 1rem;
-    width: 50rem; 
+    width: 40rem; 
     max-width:95rem;
     background-color:aliceblue;
     text-align: center;
+    font-weight: 600;
+    font-size: 3em;
 }

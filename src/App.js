@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Title from "./components/Title/Title";
@@ -9,10 +10,13 @@ import AnswerResult from "./components/Answer/AnswerResult";
 import ScoreLives from "./components/ScoreLives/ScoreLives";
 import NewGame from "./components/Controls/NewGame";
 import GameOver from "./components/GameOver/GameOver";
+import Card from "./components/UI/Card";
+
+import "./App.css";
 
 function App() {
   // App title
-  const title = "Ahoj! Welcome to Bad Banana!";
+  const title = "🍌 Ahoj! Welcome to Bad Banana! 🍌";
 
   // Required to get data from AnswerForm component to ScoreLives ScoreComponentt
   const [score, setScore] = useState(0);
@@ -75,33 +79,43 @@ function App() {
 
   return (
     <div>
+      <Helmet>
+        <style>
+          {
+            "body { background-color: cornflowerblue;" +
+            "font-family: pt sans, Arial, Helvetica, sans-serif;}"
+          }
+        </style>
+      </Helmet>
       <Title title={title} />
       <Instructions />
-      <ScoreLives score={score} lives={lives} />
-      <Question
-        newGame={newGame}
-        onUpdateNewGameToFalse={updateNewGameToFalse}
-        questionAnswered={questionAnswered}
-        onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
-        gameOver={gameOver}
-        onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
-      />
-      {!questionAnswered && (
-        <AnswerForm
-          onUpdateGameState={updateGameState}
+      <Card className="app-card">
+        <ScoreLives score={score} lives={lives} />
+        <Question
           newGame={newGame}
-          isDivisionQuestion={isDivisionQuestion}
+          onUpdateNewGameToFalse={updateNewGameToFalse}
+          questionAnswered={questionAnswered}
+          onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
+          gameOver={gameOver}
+          onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
         />
-      )}
-      {questionAnswered && (
-        <AnswerResult
-          answerCorrect={answerCorrect}
-          answer={answer}
-          userAnswer={userAnswer}
-        />
-      )}
-      {gameOver && <GameOver />}
-      {gameOver && <NewGame onUpdateGameState={updateGameState} />}
+        {!questionAnswered && (
+          <AnswerForm
+            onUpdateGameState={updateGameState}
+            newGame={newGame}
+            isDivisionQuestion={isDivisionQuestion}
+          />
+        )}
+        {questionAnswered && (
+          <AnswerResult
+            answerCorrect={answerCorrect}
+            answer={answer}
+            userAnswer={userAnswer}
+          />
+        )}
+        {gameOver && <GameOver />}
+        {gameOver && <NewGame onUpdateGameState={updateGameState} />}
+      </Card>
     </div>
   );
 }
