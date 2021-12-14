@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { Container, Row, Col } from "react-bootstrap";
+// import Container from "react-bootstrap/Container";
+// import Row from "react-bootstrap/Row";
+// import Col from "react-bootstrap/Col";
+
 import Title from "./components/Title/Title";
 import Instructions from "./components/Instructions/Instructions";
 import Question from "./components/Question/Question";
@@ -78,45 +83,57 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <Container fluid>
       <Helmet>
         <style>
-          {
-            "body { background-color: cornflowerblue;" +
-            "font-family: pt sans, Arial, Helvetica, sans-serif;}"
-          }
+          {"body { background-color: cornflowerblue;" +
+            "font-family: pt sans, Arial, Helvetica, sans-serif;}"}
         </style>
       </Helmet>
-      <Title title={title} />
-      <Instructions />
-      <Card className="app-card">
-        <ScoreLives score={score} lives={lives} />
-        <Question
-          newGame={newGame}
-          onUpdateNewGameToFalse={updateNewGameToFalse}
-          questionAnswered={questionAnswered}
-          onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
-          gameOver={gameOver}
-          onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
-        />
-        {!questionAnswered && (
-          <AnswerForm
-            onUpdateGameState={updateGameState}
-            newGame={newGame}
-            isDivisionQuestion={isDivisionQuestion}
-          />
-        )}
-        {questionAnswered && (
-          <AnswerResult
-            answerCorrect={answerCorrect}
-            answer={answer}
-            userAnswer={userAnswer}
-          />
-        )}
-        {gameOver && <GameOver />}
-        {gameOver && <NewGame onUpdateGameState={updateGameState} />}
-      </Card>
-    </div>
+      
+        <Row>
+          <Col>
+            <Title title={title} />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Instructions />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <Card className="app-card">
+              <ScoreLives score={score} lives={lives} />
+              <Question
+                newGame={newGame}
+                onUpdateNewGameToFalse={updateNewGameToFalse}
+                questionAnswered={questionAnswered}
+                onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
+                gameOver={gameOver}
+                onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
+              />
+              {!questionAnswered && (
+                <AnswerForm
+                  onUpdateGameState={updateGameState}
+                  newGame={newGame}
+                  isDivisionQuestion={isDivisionQuestion}
+                />
+              )}
+              {questionAnswered && (
+                <AnswerResult
+                  answerCorrect={answerCorrect}
+                  answer={answer}
+                  userAnswer={userAnswer}
+                />
+              )}
+              {gameOver && <GameOver />}
+              {gameOver && <NewGame onUpdateGameState={updateGameState} />}
+            </Card>
+          </Col>
+        </Row>
+      </Container>
   );
 }
 
