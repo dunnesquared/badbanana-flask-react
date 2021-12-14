@@ -10,7 +10,7 @@ const AnswerResult = (props) => {
         </Card>
       </div>
     );
-  } else if (props.answerCorrect == false) {
+  } else if (props.answerCorrect === false) {
     return (
       <div>
         <Card className="answer-result">

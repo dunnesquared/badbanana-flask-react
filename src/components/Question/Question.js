@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
+import Button from "react-bootstrap/Button";
+
 import Card from "../UI/Card";
 import "./Question.css";
 
 import Button from "react-bootstrap/Button";
 
 const Question = (props) => {
+  // Default interval for operand values
+  const numFrom = 1;
+  const numTo = 10;
+
   const [question, setQuestion] = useState("...");
   const [questionType, setQuestionType] = useState("Multiplication");
-  const [smallestNumber, setSmallestNumber] = useState(1);
-  const [largestNumber, setLargestNumber] = useState(1000);
+  const [smallestNumber, setSmallestNumber] = useState(numFrom);
+  const [largestNumber, setLargestNumber] = useState(numTo);
 
   const nextQuestionClickedHandler = () => {
     console.log("Next Question clicked!");
@@ -28,6 +35,29 @@ const Question = (props) => {
     setLargestNumber(event.target.value);
   };
 
+  const createQuestionString = (operand1, operand2, operator) => {
+    let question = null;
+    switch (operator) {
+      case "*":
+        question = `${operand1} × ${operand2}`;
+        break;
+      case "+":
+        question = `${operand1} + ${operand2}`;
+        break;
+      case "-":
+        question = `${operand1} - ${operand2}`;
+        break;
+      case "//":
+        question = `${operand1} ÷ ${operand2}`;
+        break;
+      default:
+        console.error(
+          "Unable to create question string: Operator character not recognized!"
+        );
+    }
+    return question;
+  };
+
   const getNewQuestionFromAPI = () => {
     const url = "api/question";
     const requestOptions = {
@@ -39,8 +69,16 @@ const Question = (props) => {
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
-        // Update question
-        setQuestion(data.question);
+        // Question string in response uses special characters for arithmetic
+        // e.g. * for times, // for integer division.
+        // Convert them into something more human-readable.
+        const questionString = createQuestionString(
+          data.operand1,
+          data.operand2,
+          data.operator
+        );
+        setQuestion(questionString);
+        // setQuestion(data.question);
         // Let app know whether a division question returned.
         props.onUpdateIsDivisionQuestion(
           data.question_type.toLowerCase() === "division"
@@ -53,6 +91,14 @@ const Question = (props) => {
     // Once this button is clicked, game is no longer new.
     props.onUpdateNewGameToFalse();
     getNewQuestionFromAPI();
+
+    // You'll want to show the answer form if you've
+    // just answered a question, but changed the question
+    // parameters.
+    if (props.questionAnswered) {
+      props.onUpdateQuestionAnsweredToFalse();
+    }
+
     event.preventDefault();
   };
 
@@ -110,7 +156,7 @@ const Question = (props) => {
           </div>
         </form>
       )}
-      {props.newGame == false && (
+      {props.newGame === false && (
         <Card className="question">
           <p>{question} = ?</p>
           {!props.gameOver && props.questionAnswered && (
