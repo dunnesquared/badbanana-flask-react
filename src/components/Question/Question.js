@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import Card from "../UI/Card";
@@ -107,52 +108,52 @@ const Question = (props) => {
   return (
     <div>
       {!props.gameOver && (
-        <form onSubmit={submitHandler}>
+        <Form onSubmit={submitHandler}>
           <div>
             <Card className="question-form">
-              <label>
-                What kind of arithmetic do you want to practice?
-                <div>
-                  <select value={questionType} onChange={changeHandler}>
-                    <option value="Multiplication">Multiplication</option>
-                    <option value="Division">Division</option>
-                    <option value="Addition">Addition</option>
-                    <option value="Subtraction">Subtraction</option>
-                    <option value="Any">Any Kind</option>
-                  </select>
-                </div>
-              </label>
-              <br></br>
-              <div>
-                <label>From:</label>
-                <input
+              <Form.Group className="mb-3">
+                <Form.Label>
+                  What kind of arithmetic do you want to practice?
+                </Form.Label>
+
+                <Form.Select value={questionType} onChange={changeHandler}>
+                  <option value="Multiplication">Multiplication</option>
+                  <option value="Division">Division</option>
+                  <option value="Addition">Addition</option>
+                  <option value="Subtraction">Subtraction</option>
+                  <option value="Any">Any Kind</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>From:</Form.Label>
+                <Form.Control
                   type="number"
                   min="0"
                   step="1"
                   value={smallestNumber}
                   onChange={smallestNumberChangeHandler}
                 />
-                <label>To:</label>
-                <input
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>To:</Form.Label>
+                <Form.Control
                   type="number"
                   min={smallestNumber}
                   step="1"
                   value={largestNumber}
                   onChange={largestNumberChangeHandler}
                 />
-              </div>
+              </Form.Group>
 
-              <div>
-                <br></br>
-                <input
+                <Form.Control
                   type="submit"
                   value="Apply"
                   disabled={!questionType || !smallestNumber || !largestNumber}
                 />
-              </div>
+              
             </Card>
           </div>
-        </form>
+        </Form>
       )}
       {props.newGame === false && (
         <Card className="question">
