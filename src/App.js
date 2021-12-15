@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 // import Container from "react-bootstrap/Container";
 // import Row from "react-bootstrap/Row";
 // import Col from "react-bootstrap/Col";
@@ -82,6 +82,11 @@ function App() {
       });
   }, []);
 
+  // Modal states and handlers
+  const [showInstructions, setShowInstructions] = useState(false);
+  const handleCloseInstructions = () => setShowInstructions(false);
+  const handleShowInstructions = () => setShowInstructions(true);
+
   return (
     <Container fluid>
       <Helmet>
@@ -90,62 +95,72 @@ function App() {
             "font-family: pt sans, Arial, Helvetica, sans-serif;}"}
         </style>
       </Helmet>
-      
-        <Row>
-          <Col>
-            <Title title={title} />
-          </Col>
-        </Row>
-        {/* <Row>
+
+      <Row>
+        <Col>
+          <Title title={title} />
+        </Col>
+      </Row>
+
+      <Modal show={showInstructions} onHide={handleCloseInstructions}>
+        <Modal.Header closeButton>
+          <Modal.Title>Instructions</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Instructions />
+        </Modal.Body>
+      </Modal>
+
+      {/* <Row>
           <Col>
             <Instructions />
           </Col>
         </Row> */}
 
-        <Row>
-          <Col className='text-center'>
-            <Button>Instructions</Button>
-          </Col>
-          <Col className='text-center'>
-            <Button>Settings</Button>
-          </Col>
-          <Col className='text-center'>
-            <Button>New Game</Button>
-          </Col>
-        </Row>
+      <Row>
+        <Col className="text-center">
+          <Button onClick={handleShowInstructions}>Instructions</Button>
+        </Col>
+        <Col className="text-center">
+          <Button>Settings</Button>
+        </Col>
+        <Col className="text-center">
+          <Button>New Game</Button>
+        </Col>
+      </Row>
 
-        <Row>
-          <Col>
-            <Card className="app-card">
-              <ScoreLives score={score} lives={lives} />
-              <Question
+      <Row>
+        <Col>
+          <Card className="app-card">
+            <ScoreLives score={score} lives={lives} />
+            <Question
+              newGame={newGame}
+              onUpdateNewGameToFalse={updateNewGameToFalse}
+              questionAnswered={questionAnswered}
+              onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
+              gameOver={gameOver}
+              onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
+            />
+            {!questionAnswered && (
+              <AnswerForm
+                onUpdateGameState={updateGameState}
                 newGame={newGame}
-                onUpdateNewGameToFalse={updateNewGameToFalse}
-                questionAnswered={questionAnswered}
-                onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
-                gameOver={gameOver}
-                onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
+                isDivisionQuestion={isDivisionQuestion}
               />
-              {!questionAnswered && (
-                <AnswerForm
-                  onUpdateGameState={updateGameState}
-                  newGame={newGame}
-                  isDivisionQuestion={isDivisionQuestion}
-                />
-              )}
-              {questionAnswered && (
-                <AnswerResult
-                  answerCorrect={answerCorrect}
-                  answer={answer}
-                  userAnswer={userAnswer}
-                />
-              )}
-              {gameOver && <GameOver />}
-              {gameOver && <NewGame onUpdateGameState={updateGameState} />}
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+            )}
+            {questionAnswered && (
+              <AnswerResult
+                answerCorrect={answerCorrect}
+                answer={answer}
+                userAnswer={userAnswer}
+              />
+            )}
+            {gameOver && <GameOver />}
+            {gameOver && <NewGame onUpdateGameState={updateGameState} />}
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
