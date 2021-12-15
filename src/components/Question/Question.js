@@ -113,7 +113,7 @@ const Question = (props) => {
             <Card className="question-form">
               <Form.Group className="mb-3">
                 <Form.Label>
-                  What kind of arithmetic do you want to practice?
+                  Question Type
                 </Form.Label>
 
                 <Form.Select value={questionType} onChange={changeHandler}>
@@ -125,7 +125,7 @@ const Question = (props) => {
                 </Form.Select>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>From:</Form.Label>
+                <Form.Label>From</Form.Label>
                 <Form.Control
                   type="number"
                   min="0"
@@ -135,7 +135,7 @@ const Question = (props) => {
                 />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>To:</Form.Label>
+                <Form.Label>To</Form.Label>
                 <Form.Control
                   type="number"
                   min={smallestNumber}

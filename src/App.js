@@ -96,11 +96,11 @@ function App() {
             <Title title={title} />
           </Col>
         </Row>
-        <Row>
+        {/* <Row>
           <Col>
             <Instructions />
           </Col>
-        </Row>
+        </Row> */}
 
         <Row>
           <Col>
