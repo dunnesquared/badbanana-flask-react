@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 // import Container from "react-bootstrap/Container";
 // import Row from "react-bootstrap/Row";
 // import Col from "react-bootstrap/Col";
@@ -101,6 +101,18 @@ function App() {
             <Instructions />
           </Col>
         </Row> */}
+
+        <Row>
+          <Col className='text-center'>
+            <Button>Instructions</Button>
+          </Col>
+          <Col className='text-center'>
+            <Button>Settings</Button>
+          </Col>
+          <Col className='text-center'>
+            <Button>New Game</Button>
+          </Col>
+        </Row>
 
         <Row>
           <Col>
