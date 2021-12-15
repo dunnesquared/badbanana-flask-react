@@ -1,8 +1,7 @@
 .question{
         margin: 1rem auto;
         padding: 1rem;
-        width: 40rem; 
-        max-width:95rem;
+        width: 75%; 
         background-color:aliceblue;
         text-align: center;
         font-weight: 600;
@@ -13,7 +12,7 @@
 .question-form{
     margin: 1rem auto;
     padding: 1rem;
-    width: 40rem; 
+    width: 75%; 
     max-width:95rem;
     background-color:aliceblue;
     font-weight: 600;
