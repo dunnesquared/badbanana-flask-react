@@ -70,8 +70,8 @@ const AnswerForm = (props) => {
 
   if (!props.isDivisionQuestion) {
     return (
-      <Form onSubmit={submitHandler}>
-        <Card className="answer-form">
+      <Form className="answer-form" onSubmit={submitHandler}>
+        {/* <Card className="answer-form"> */}
           <Form.Group className="mb-3">
             <div>
               <Form.Label>Answer</Form.Label>
@@ -89,13 +89,13 @@ const AnswerForm = (props) => {
               Submit
             </Button>
           </div>
-        </Card>
+        {/* </Card> */}
       </Form>
     );
   } else {
     return (
       <Form onSubmit={submitHandler}>
-        <Card className="answer-form">
+        {/* <Card className="answer-form"> */}
           <Form.Group className="mb-3">
             <div>
               <Form.Label>Quotient</Form.Label>
@@ -121,7 +121,7 @@ const AnswerForm = (props) => {
               </Button>
             </div>
           
-        </Card>
+        {/* </Card> */}
       </Form>
     );
   }

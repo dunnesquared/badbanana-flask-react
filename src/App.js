@@ -180,24 +180,27 @@ function App() {
 
       <Row>
         <Col>
-          {!newGame  && (
-          <Card className="app-card">
-           <ScoreLives score={score} lives={lives} />
-
-            {newGame === false && questionData !== null && (
-              <Question
-                questionData={questionData}
-                questionAnswered={questionAnswered}
-                gameOver={gameOver}
-                onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
-                smallestNumber={smallestNumber}
-                largestNumber={largestNumber}
-                questionType={questionType}
-                onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
-                onUpdateQuestionData={updateQuestionData}
-              />
-            )}
-            {/* <QuestionSettings
+          {!newGame && (
+            <Card className="app-card">
+              <ScoreLives score={score} lives={lives} />
+              
+              <Card className="qa-card">
+                {newGame === false && questionData !== null && (
+                  <Question
+                    questionData={questionData}
+                    questionAnswered={questionAnswered}
+                    gameOver={gameOver}
+                    onUpdateQuestionAnsweredToFalse={
+                      updateQuestionAnsweredToFalse
+                    }
+                    smallestNumber={smallestNumber}
+                    largestNumber={largestNumber}
+                    questionType={questionType}
+                    onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
+                    onUpdateQuestionData={updateQuestionData}
+                  />
+                )}
+                {/* <QuestionSettings
               newGame={newGame}
               onUpdateNewGameToFalse={updateNewGameToFalse}
               questionAnswered={questionAnswered}
@@ -206,23 +209,26 @@ function App() {
               onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
               onUpdateQuestionData={updateQuestionData}
             /> */}
-            {!questionAnswered && (
-              <AnswerForm
-                onUpdateGameState={updateGameState}
-                newGame={newGame}
-                isDivisionQuestion={isDivisionQuestion}
-              />
-            )}
-            {questionAnswered && (
-              <AnswerResult
-                answerCorrect={answerCorrect}
-                answer={answer}
-                userAnswer={userAnswer}
-              />
-            )}
-            {gameOver && <GameOver />}
-            {gameOver && <NewGame onUpdateGameState={updateGameState} />}
-          </Card>)}
+                {!questionAnswered && (
+                  <AnswerForm
+                    onUpdateGameState={updateGameState}
+                    newGame={newGame}
+                    isDivisionQuestion={isDivisionQuestion}
+                  />
+                )}
+
+                {questionAnswered && (
+                  <AnswerResult
+                    answerCorrect={answerCorrect}
+                    answer={answer}
+                    userAnswer={userAnswer}
+                  />
+                )}
+              </Card>
+              {gameOver && <GameOver />}
+              {gameOver && <NewGame onUpdateGameState={updateGameState} />}
+            </Card>
+          )}
         </Col>
       </Row>
     </Container>
