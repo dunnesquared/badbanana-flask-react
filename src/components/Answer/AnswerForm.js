@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+
 import Card from "../UI/Card";
 import "./AnswerForm.css";
 
@@ -67,54 +70,59 @@ const AnswerForm = (props) => {
 
   if (!props.isDivisionQuestion) {
     return (
-      <form onSubmit={submitHandler}>
-        <Card className="answer-form">
-          <div>
-            <label>Answer</label>
-            <br></br>
+      <Form className="answer-form" onSubmit={submitHandler}>
+        {/* <Card className="answer-form"> */}
+          <Form.Group className="mb-3">
+            <div>
+              <Form.Label>Answer</Form.Label>
+              <br></br>
 
-            <input
-              type="number"
-              value={enteredAnswer}
-              onChange={answerChangeHandler}
-            />
-          </div>
+              <Form.Control
+                type="number"
+                value={enteredAnswer}
+                onChange={answerChangeHandler}
+              />
+            </div>
+          </Form.Group>
           <div>
-            <button type="submit" disabled={!enteredAnswer}>
+            <Button type="submit" disabled={!enteredAnswer}>
               Submit
-            </button>
+            </Button>
           </div>
-        </Card>
-      </form>
+        {/* </Card> */}
+      </Form>
     );
   } else {
     return (
-      <form onSubmit={submitHandler}>
-        <Card className="answer-form">
-          <div>
-            <label>Quotient</label>
-            <br></br>
-            <input
-              type="number"
-              value={enteredAnswer}
-              onChange={answerChangeHandler}
-            />
-            <br></br>
-            <label>Remainder</label>
-            <br></br>
-            <input
-              type="number"
-              value={enteredAnswer2}
-              onChange={answer2ChangeHandler}
-            />
-          </div>
-          <div>
-            <button type="submit" disabled={!enteredAnswer}>
-              Submit
-            </button>
-          </div>
-        </Card>
-      </form>
+      <Form onSubmit={submitHandler}>
+        {/* <Card className="answer-form"> */}
+          <Form.Group className="mb-3">
+            <div>
+              <Form.Label>Quotient</Form.Label>
+              <br></br>
+              <Form.Control
+                type="number"
+                value={enteredAnswer}
+                onChange={answerChangeHandler}
+              />
+              <br></br>
+              <label>Remainder</label>
+              <br></br>
+              <Form.Control
+                type="number"
+                value={enteredAnswer2}
+                onChange={answer2ChangeHandler}
+              />
+            </div>
+            </Form.Group>
+            <div>
+              <Button type="submit" disabled={!enteredAnswer}>
+                Submit
+              </Button>
+            </div>
+          
+        {/* </Card> */}
+      </Form>
     );
   }
 };
