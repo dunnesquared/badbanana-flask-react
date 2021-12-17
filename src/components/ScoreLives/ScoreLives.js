@@ -5,8 +5,8 @@ const ScoreLives = (props) => {
   return (
     <div>
       <Card className="score-lives">
-        <pre>Score: {props.score}     Lives: {props.lives}</pre>
-
+        <div>Score: {props.score}</div>     
+        <div>Lives: {props.lives}</div>
       </Card>
     </div>
   );

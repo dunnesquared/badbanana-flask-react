@@ -1,13 +1,17 @@
-
 .app-card {
   margin: 1rem auto;
-  width: 50rem; 
-  max-width:95rem;
+  width: 100%;
   /* background-color:rgb(243, 255, 240); */
-  background-image: url(./img/white-lotus-wall-paper-cheetah.png)
-};
+  background-image: url(./img/white-lotus-wall-paper-cheetah.png);
+}
 
-
+.qa-card {
+  margin: 1rem auto;
+  padding: 1rem;
+  width: 75%;
+  background-color: aliceblue;
+  font-weight: 600;
+}
 
 /* .App {
   text-align: center;
