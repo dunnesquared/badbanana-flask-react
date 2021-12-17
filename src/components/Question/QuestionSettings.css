@@ -1,0 +1,10 @@
+
+
+.question-form{
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 75%; 
+    max-width:95rem;
+    background-color:aliceblue;
+    font-weight: 600;
+}

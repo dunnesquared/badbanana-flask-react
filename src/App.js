@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Container, Row, Col, Button, Modal } from "react-bootstrap";
+import { Container, Row, Col, Button, Modal, Collapse } from "react-bootstrap";
 // import Container from "react-bootstrap/Container";
 // import Row from "react-bootstrap/Row";
 // import Col from "react-bootstrap/Col";
 
 import Title from "./components/Title/Title";
 import Instructions from "./components/Instructions/Instructions";
+import QuestionSettings from "./components/Question/QuestionSettings";
 import Question from "./components/Question/Question";
 import AnswerForm from "./components/Answer/AnswerForm";
 import AnswerResult from "./components/Answer/AnswerResult";
@@ -33,6 +34,10 @@ function App() {
   const [questionAnswered, setQuestionAnswered] = useState(false);
   const [userAnswer, setUserAnswer] = useState(null);
   const [isDivisionQuestion, setIsDivisionQuestion] = useState(false);
+  const [questionData, setQuestionData] = useState(null);
+  const [smallestNumber, setSmallestNumber] = useState(1);
+  const [largestNumber, setLargestNumber] = useState(10);
+  const [questionType, setQuestionType] = useState('Multiplication')
 
   const updateGameState = (gameStateData) => {
     // Debugging
@@ -71,6 +76,11 @@ function App() {
     setIsDivisionQuestion(state);
   };
 
+  const updateQuestionData = (operand1, operand2, operator) => {
+    console.log(`UpdateQuestionData ${operand1}`);
+    setQuestionData({ operand1, operand2, operator });
+  };
+
   // Keep this as it fetches the lastest scores from the server
   // if the session is still alive.
   useEffect(() => {
@@ -86,6 +96,10 @@ function App() {
   const [showInstructions, setShowInstructions] = useState(false);
   const handleCloseInstructions = () => setShowInstructions(false);
   const handleShowInstructions = () => setShowInstructions(true);
+
+  const [showSettings, setShowSettings] = useState(false);
+  const handleCloseSettings = () => setShowSettings(false);
+  const handleShowSettings = () => setShowSettings(true);
 
   return (
     <Container fluid>
@@ -111,18 +125,18 @@ function App() {
         </Modal.Body>
       </Modal>
 
-      {/* <Row>
-          <Col>
-            <Instructions />
-          </Col>
-        </Row> */}
-
       <Row>
         <Col className="text-center">
           <Button onClick={handleShowInstructions}>Instructions</Button>
         </Col>
         <Col className="text-center">
-          <Button>Settings</Button>
+          <Button
+            onClick={() => setShowSettings(!showSettings)}
+            aria-controls="settings-collapse-form"
+            aria-expanded={showSettings}
+          >
+            Settings
+          </Button>
         </Col>
         <Col className="text-center">
           <Button>New Game</Button>
@@ -131,16 +145,52 @@ function App() {
 
       <Row>
         <Col>
+          <Collapse in={showSettings}>
+            <div id="settings-collapse-form">
+              <QuestionSettings
+                newGame={newGame}
+                onUpdateNewGameToFalse={updateNewGameToFalse}
+                questionAnswered={questionAnswered}
+                onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
+                gameOver={gameOver}
+                onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
+                onUpdateQuestionData={updateQuestionData}
+                onSetSmallestNumber={setSmallestNumber}
+                onSetLargestNumber={setLargestNumber}
+                onSetQuestionType={setQuestionType}
+              />
+            </div>
+          </Collapse>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
           <Card className="app-card">
             <ScoreLives score={score} lives={lives} />
-            <Question
+
+            {newGame === false && questionData !== null && (
+              <Question
+                questionData={questionData}
+                questionAnswered={questionAnswered}
+                gameOver={gameOver}
+                onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
+                smallestNumber={smallestNumber}
+                largestNumber={largestNumber}
+                questionType={questionType}
+                onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
+                onUpdateQuestionData={updateQuestionData}
+              />
+            )}
+            {/* <QuestionSettings
               newGame={newGame}
               onUpdateNewGameToFalse={updateNewGameToFalse}
               questionAnswered={questionAnswered}
               onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
               gameOver={gameOver}
               onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
-            />
+              onUpdateQuestionData={updateQuestionData}
+            /> */}
             {!questionAnswered && (
               <AnswerForm
                 onUpdateGameState={updateGameState}

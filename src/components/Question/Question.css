@@ -1,19 +1,9 @@
-.question{
-        margin: 1rem auto;
-        padding: 1rem;
-        width: 75%; 
-        background-color:aliceblue;
-        text-align: center;
-        font-weight: 600;
-        font-size: large;
-        
-}
-
-.question-form{
-    margin: 1rem auto;
-    padding: 1rem;
-    width: 75%; 
-    max-width:95rem;
-    background-color:aliceblue;
-    font-weight: 600;
+.question {
+  margin: 1rem auto;
+  padding: 1rem;
+  width: 75%;
+  background-color: aliceblue;
+  text-align: center;
+  font-weight: 600;
+  font-size: large;
 }
