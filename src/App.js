@@ -171,6 +171,7 @@ function App() {
                 onSetSmallestNumber={setSmallestNumber}
                 onSetLargestNumber={setLargestNumber}
                 onSetQuestionType={setQuestionType}
+                onHandleCloseSettings={handleCloseSettings}
               />
             </div>
           </Collapse>

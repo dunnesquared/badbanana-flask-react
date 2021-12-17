@@ -102,6 +102,9 @@ const QuestionSettings = (props) => {
       props.onUpdateQuestionAnsweredToFalse();
     }
 
+    // Close seetings each time a new setting applied.
+    props.onHandleCloseSettings();
+
     event.preventDefault();
   };
 
