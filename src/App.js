@@ -180,8 +180,9 @@ function App() {
 
       <Row>
         <Col>
+          {!newGame  && (
           <Card className="app-card">
-            <ScoreLives score={score} lives={lives} />
+           <ScoreLives score={score} lives={lives} />
 
             {newGame === false && questionData !== null && (
               <Question
@@ -221,7 +222,7 @@ function App() {
             )}
             {gameOver && <GameOver />}
             {gameOver && <NewGame onUpdateGameState={updateGameState} />}
-          </Card>
+          </Card>)}
         </Col>
       </Row>
     </Container>
