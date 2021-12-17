@@ -97,7 +97,7 @@ function App() {
   const handleCloseInstructions = () => setShowInstructions(false);
   const handleShowInstructions = () => setShowInstructions(true);
 
-  const [showSettings, setShowSettings] = useState(false);
+  const [showSettings, setShowSettings] = useState(true);
   const handleCloseSettings = () => setShowSettings(false);
   const handleShowSettings = () => setShowSettings(true);
 
