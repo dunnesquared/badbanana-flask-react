@@ -198,6 +198,9 @@ function App() {
                     questionType={questionType}
                     onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
                     onUpdateQuestionData={updateQuestionData}
+                    answerCorrect={answerCorrect}
+                    answer={answer}
+                    userAnswer={userAnswer}
                   />
                 )}
                 {/* <QuestionSettings
@@ -217,13 +220,13 @@ function App() {
                   />
                 )}
 
-                {questionAnswered && (
+                {/* {questionAnswered && (
                   <AnswerResult
                     answerCorrect={answerCorrect}
                     answer={answer}
                     userAnswer={userAnswer}
                   />
-                )}
+                )} */}
               </Card>
               {gameOver && <GameOver />}
               {gameOver && <NewGame onUpdateGameState={updateGameState} />}

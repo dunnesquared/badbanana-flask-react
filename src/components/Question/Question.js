@@ -69,26 +69,43 @@ const Question = (props) => {
     return question;
   };
 
-  return (
-    <div className="question">
-      {/* <Card className="question"> */}
-
-      <div>
-        {createQuestionString(
-          props.questionData.operand1,
-          props.questionData.operand2,
-          props.questionData.operator
-        )}{" "}
-        = ?
-      </div>
-      {!props.gameOver && props.questionAnswered && (
+  if (props.questionAnswered) {
+    return (
+      <div className="question">
         <div>
-          <Button onClick={nextQuestionClickedHandler}>Next Question</Button>
+          {createQuestionString(
+            props.questionData.operand1,
+            props.questionData.operand2,
+            props.questionData.operator
+          )}{" "}
+          = {props.userAnswer} {props.answerCorrect ? "✅" : "❌"}
         </div>
-      )}
-      {/* </Card> */}
-    </div>
-  );
+        <div>
+          {props.answerCorrect
+            ? "Correct😸!!"
+            : `🙈! Right answer: ${props.answer}`}
+        </div>
+        {!props.gameOver && props.questionAnswered && (
+          <div>
+            <Button onClick={nextQuestionClickedHandler}>Next Question</Button>
+          </div>
+        )}
+      </div>
+    );
+  } else {
+    return (
+      <div className="question">
+        <div>
+          {createQuestionString(
+            props.questionData.operand1,
+            props.questionData.operand2,
+            props.questionData.operator
+          )}{" "}
+          = ?
+        </div>
+      </div>
+    );
+  }
 };
 
 export default Question;
