@@ -37,7 +37,7 @@ function App() {
   const [questionData, setQuestionData] = useState(null);
   const [smallestNumber, setSmallestNumber] = useState(1);
   const [largestNumber, setLargestNumber] = useState(10);
-  const [questionType, setQuestionType] = useState('Multiplication')
+  const [questionType, setQuestionType] = useState("Multiplication");
 
   const updateGameState = (gameStateData) => {
     // Debugging
@@ -101,6 +101,19 @@ function App() {
   const handleCloseSettings = () => setShowSettings(false);
   const handleShowSettings = () => setShowSettings(true);
 
+  const restartHandler = () => {
+    const url = "api/new-game";
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setScore(data.score);
+        setLives(data.lives);
+        window.location.reload();
+      })
+      .catch((error) => console.log("Restart Game Error", error));
+  };
+
   return (
     <Container fluid>
       <Helmet>
@@ -139,7 +152,7 @@ function App() {
           </Button>
         </Col>
         <Col className="text-center">
-          <Button>New Game</Button>
+          <Button onClick={restartHandler}>Restart</Button>
         </Col>
       </Row>
 
