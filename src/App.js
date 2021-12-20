@@ -53,8 +53,11 @@ function App() {
 
     // Need to show both quotient and remainder for division questions.
     if (isDivisionQuestion) {
-      const combinedAnswer = `Quotient: ${gameStateData.answer.quotient},\
-        Remainder: ${gameStateData.answer.remainder}`;
+      const remainder =
+        gameStateData.answer.remainder === 0
+          ? ""
+          : `R${gameStateData.answer.remainder}`;
+      const combinedAnswer = `${gameStateData.answer.quotient} ${remainder}`;
       setAnswer(combinedAnswer);
     } else {
       setAnswer(gameStateData.answer);
@@ -183,7 +186,7 @@ function App() {
           {!newGame && (
             <Card className="app-card">
               <ScoreLives score={score} lives={lives} />
-              
+
               <Card className="qa-card">
                 {newGame === false && questionData !== null && (
                   <Question
