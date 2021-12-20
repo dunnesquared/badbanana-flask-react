@@ -78,7 +78,7 @@ const Question = (props) => {
             props.questionData.operand2,
             props.questionData.operator
           )}{" "}
-          = {props.userAnswer} {props.answerCorrect ? "✅" : "❌"}
+          = {props.userAnswer} {props.answerCorrect ? "✔️" : "❌"}
         </div>
         <div>
           {props.answerCorrect
