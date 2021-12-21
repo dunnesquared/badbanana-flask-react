@@ -78,12 +78,12 @@ const Question = (props) => {
             props.questionData.operand2,
             props.questionData.operator
           )}{" "}
-          = {props.userAnswer} {props.answerCorrect ? "✔️" : "❌"}
+          = {props.userAnswer} {props.answerCorrect ? "✔️" : "❌ "}
         </div>
         <div>
           {props.answerCorrect
-            ? "Correct😸!!"
-            : `🙈! Right answer: ${props.answer}`}
+            ? "Nice!!"
+            : `Right answer = ${props.answer}`}
         </div>
         {!props.gameOver && props.questionAnswered && (
           <div>

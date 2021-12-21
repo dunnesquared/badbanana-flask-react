@@ -232,7 +232,7 @@ function App() {
                 )} */}
               </Card>
               {gameOver && <GameOver />}
-              {gameOver && <NewGame onUpdateGameState={updateGameState} />}
+              {/* {gameOver && <NewGame onUpdateGameState={updateGameState} />} */}
             </Card>
           )}
         </Col>
