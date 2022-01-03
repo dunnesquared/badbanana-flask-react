@@ -121,7 +121,7 @@ function App() {
     <Container fluid>
       <Helmet>
         <style>
-          {"body { background-color: cornflowerblue;" +
+          {"body { background-image: linear-gradient(to right, deepskyblue, pink, aquamarine);" +
             "font-family: pt sans, Arial, Helvetica, sans-serif;}"}
         </style>
       </Helmet>
