@@ -17,12 +17,13 @@ import ScoreLives from "./components/ScoreLives/ScoreLives";
 import NewGame from "./components/Controls/NewGame";
 import GameOver from "./components/GameOver/GameOver";
 import Card from "./components/UI/Card";
+import Credits from "./components/Credits/Credits";
 
 import "./App.css";
 
 function App() {
   // App title
-  const title = "🍌 Ahoj! Welcome to Bad Banana! 🍌";
+  const title = "🍌✖️  Welcome to Bad Banana! ➗🙈";
 
   // Required to get data from AnswerForm component to ScoreLives ScoreComponentt
   const [score, setScore] = useState(0);
@@ -53,8 +54,11 @@ function App() {
 
     // Need to show both quotient and remainder for division questions.
     if (isDivisionQuestion) {
-      const combinedAnswer = `Quotient: ${gameStateData.answer.quotient},\
-        Remainder: ${gameStateData.answer.remainder}`;
+      const remainder =
+        gameStateData.answer.remainder === 0
+          ? ""
+          : `R${gameStateData.answer.remainder}`;
+      const combinedAnswer = `${gameStateData.answer.quotient} ${remainder}`;
       setAnswer(combinedAnswer);
     } else {
       setAnswer(gameStateData.answer);
@@ -118,7 +122,7 @@ function App() {
     <Container fluid>
       <Helmet>
         <style>
-          {"body { background-color: cornflowerblue;" +
+          {"body { background-image: linear-gradient(to right, deepskyblue, pink, aquamarine);" +
             "font-family: pt sans, Arial, Helvetica, sans-serif;}"}
         </style>
       </Helmet>
@@ -183,7 +187,7 @@ function App() {
           {!newGame && (
             <Card className="app-card">
               <ScoreLives score={score} lives={lives} />
-              
+
               <Card className="qa-card">
                 {newGame === false && questionData !== null && (
                   <Question
@@ -229,9 +233,14 @@ function App() {
                 )} */}
               </Card>
               {gameOver && <GameOver />}
-              {gameOver && <NewGame onUpdateGameState={updateGameState} />}
+              {/* {gameOver && <NewGame onUpdateGameState={updateGameState} />} */}
             </Card>
           )}
+        </Col>
+      </Row>
+      <Row>
+        <Col className="text-center">
+          <Credits />
         </Col>
       </Row>
     </Container>

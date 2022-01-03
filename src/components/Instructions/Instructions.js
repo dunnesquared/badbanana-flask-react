@@ -5,13 +5,10 @@ import "./Instructions.css";
 
 const Instructions = (props) => {
   return (
-    <div>
-        Get a question right, get a point. Get a question wrong, lose a life.
+    <div className="instructions">
+        Get a question right, get one point.<br></br>
+        Get a question wrong, lose one life.<br></br>
         Lose all your lives and you're a BAD BANANA!
-      {/* <Card className="instructions">
-        Get a question right, get a point. Get a question wrong, lose a life.
-        Lose all your lives and you're a BAD BANANA!
-      </Card> */}
     </div>
   );
 };
