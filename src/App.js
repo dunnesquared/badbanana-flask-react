@@ -17,6 +17,7 @@ import ScoreLives from "./components/ScoreLives/ScoreLives";
 import NewGame from "./components/Controls/NewGame";
 import GameOver from "./components/GameOver/GameOver";
 import Card from "./components/UI/Card";
+import Credits from "./components/Credits/Credits";
 
 import "./App.css";
 
@@ -235,6 +236,11 @@ function App() {
               {/* {gameOver && <NewGame onUpdateGameState={updateGameState} />} */}
             </Card>
           )}
+        </Col>
+      </Row>
+      <Row>
+        <Col className="text-center">
+          <Credits />
         </Col>
       </Row>
     </Container>
