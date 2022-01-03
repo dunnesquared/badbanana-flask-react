@@ -47,8 +47,7 @@ const AnswerForm = (props) => {
 
         // Need to pass back user's quotient and remainder answers for division questions.
         if (props.isDivisionQuestion) {
-          const combinedAnswer = `Quotient: ${user_answer1}, 
-            Remainder: ${user_answer2}`;
+          const combinedAnswer = `${user_answer1} R${user_answer2}`;
           data.userAnswer = combinedAnswer;
         } else {
           data.userAnswer = enteredAnswer;
@@ -72,23 +71,23 @@ const AnswerForm = (props) => {
     return (
       <Form className="answer-form" onSubmit={submitHandler}>
         {/* <Card className="answer-form"> */}
-          <Form.Group className="mb-3">
-            <div>
-              <Form.Label>Answer</Form.Label>
-              <br></br>
-
-              <Form.Control
-                type="number"
-                value={enteredAnswer}
-                onChange={answerChangeHandler}
-              />
-            </div>
-          </Form.Group>
+        <Form.Group className="mb-3">
           <div>
-            <Button type="submit" disabled={!enteredAnswer}>
-              Submit
-            </Button>
+            <Form.Label>Answer</Form.Label>
+            <br></br>
+
+            <Form.Control
+              type="number"
+              value={enteredAnswer}
+              onChange={answerChangeHandler}
+            />
           </div>
+        </Form.Group>
+        <div>
+          <Button type="submit" disabled={!enteredAnswer}>
+            Submit
+          </Button>
+        </div>
         {/* </Card> */}
       </Form>
     );
@@ -96,31 +95,31 @@ const AnswerForm = (props) => {
     return (
       <Form onSubmit={submitHandler}>
         {/* <Card className="answer-form"> */}
-          <Form.Group className="mb-3">
-            <div>
-              <Form.Label>Quotient</Form.Label>
-              <br></br>
-              <Form.Control
-                type="number"
-                value={enteredAnswer}
-                onChange={answerChangeHandler}
-              />
-              <br></br>
-              <label>Remainder</label>
-              <br></br>
-              <Form.Control
-                type="number"
-                value={enteredAnswer2}
-                onChange={answer2ChangeHandler}
-              />
-            </div>
-            </Form.Group>
-            <div>
-              <Button type="submit" disabled={!enteredAnswer}>
-                Submit
-              </Button>
-            </div>
-          
+        <Form.Group className="mb-3">
+          <div>
+            <Form.Label>Quotient</Form.Label>
+            <br></br>
+            <Form.Control
+              type="number"
+              value={enteredAnswer}
+              onChange={answerChangeHandler}
+            />
+            <br></br>
+            <label>Remainder</label>
+            <br></br>
+            <Form.Control
+              type="number"
+              value={enteredAnswer2}
+              onChange={answer2ChangeHandler}
+            />
+          </div>
+        </Form.Group>
+        <div>
+          <Button type="submit" disabled={!enteredAnswer}>
+            Submit
+          </Button>
+        </div>
+
         {/* </Card> */}
       </Form>
     );
