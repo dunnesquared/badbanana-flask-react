@@ -22,7 +22,7 @@ import "./App.css";
 
 function App() {
   // App title
-  const title = "🍌 Ahoj! Welcome to Bad Banana! 🍌";
+  const title = "🍌✖️  Welcome to Bad Banana! ➗🙈";
 
   // Required to get data from AnswerForm component to ScoreLives ScoreComponentt
   const [score, setScore] = useState(0);
