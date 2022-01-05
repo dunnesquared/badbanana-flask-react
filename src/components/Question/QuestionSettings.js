@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 
 import Card from "../UI/Card";
 import "./QuestionSettings.css";
@@ -11,16 +10,9 @@ const QuestionSettings = (props) => {
   const numFrom = 1;
   const numTo = 10;
 
-  const [question, setQuestion] = useState("...");
   const [questionType, setQuestionType] = useState("Multiplication");
   const [smallestNumber, setSmallestNumber] = useState(numFrom);
   const [largestNumber, setLargestNumber] = useState(numTo);
-
-  const nextQuestionClickedHandler = () => {
-    console.log("Next Question clicked!");
-    props.onUpdateQuestionAnsweredToFalse();
-    getNewQuestionFromAPI();
-  };
 
   const changeHandler = (event) => {
     setQuestionType(event.target.value);
@@ -79,9 +71,8 @@ const QuestionSettings = (props) => {
           data.operand2,
           data.operator
         );
-        setQuestion(questionString);
-        props.onUpdateQuestionData(data.operand1,data.operand2,data.operator)
-        // setQuestion(data.question);
+        props.onUpdateQuestionData(data.operand1, data.operand2, data.operator);
+
         // Let app know whether a division question returned.
         props.onUpdateIsDivisionQuestion(
           data.question_type.toLowerCase() === "division"
@@ -119,9 +110,7 @@ const QuestionSettings = (props) => {
           <div>
             <Card className="question-form">
               <Form.Group className="mb-3">
-                <Form.Label>
-                  Question Type
-                </Form.Label>
+                <Form.Label>Question Type</Form.Label>
 
                 <Form.Select value={questionType} onChange={changeHandler}>
                   <option value="Multiplication">Multiplication</option>
@@ -152,23 +141,15 @@ const QuestionSettings = (props) => {
                 />
               </Form.Group>
 
-                <Form.Control
-                  type="submit"
-                  value="Apply"
-                  disabled={!questionType || !smallestNumber || !largestNumber}
-                />
+              <Form.Control
+                type="submit"
+                value="Apply"
+                disabled={!questionType || !smallestNumber || !largestNumber}
+              />
             </Card>
           </div>
         </Form>
       )}
-      {/* {props.newGame === false && (
-        <Card className="question">
-          <p>{question} = ?</p>
-          {!props.gameOver && props.questionAnswered && (
-            <Button onClick={nextQuestionClickedHandler}>Next Question</Button>
-          )}
-        </Card>
-      )} */}
     </div>
   );
 };

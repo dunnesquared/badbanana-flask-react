@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 
-import Card from "../UI/Card";
 import "./Question.css";
 
 const Question = (props) => {
@@ -81,10 +80,8 @@ const Question = (props) => {
           = {props.userAnswer} {props.answerCorrect ? "✅" : "❌ "}
         </div>
         <div>
-          {props.answerCorrect
-            ? "Nice!!"
-            : `Right answer:`}
-            {!props.answerCorrect && <div>{props.answer}</div>}       
+          {props.answerCorrect ? "Nice!!" : `Right answer:`}
+          {!props.answerCorrect && <div>{props.answer}</div>}
         </div>
         {!props.gameOver && props.questionAnswered && (
           <div>

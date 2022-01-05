@@ -3,18 +3,13 @@ import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Container, Row, Col, Button, Modal, Collapse } from "react-bootstrap";
-// import Container from "react-bootstrap/Container";
-// import Row from "react-bootstrap/Row";
-// import Col from "react-bootstrap/Col";
 
 import Title from "./components/Title/Title";
 import Instructions from "./components/Instructions/Instructions";
 import QuestionSettings from "./components/Question/QuestionSettings";
 import Question from "./components/Question/Question";
 import AnswerForm from "./components/Answer/AnswerForm";
-import AnswerResult from "./components/Answer/AnswerResult";
 import ScoreLives from "./components/ScoreLives/ScoreLives";
-import NewGame from "./components/Controls/NewGame";
 import GameOver from "./components/GameOver/GameOver";
 import Card from "./components/UI/Card";
 import Credits from "./components/Credits/Credits";
@@ -41,9 +36,6 @@ function App() {
   const [questionType, setQuestionType] = useState("Multiplication");
 
   const updateGameState = (gameStateData) => {
-    // Debugging
-    console.log(gameStateData);
-
     setScore(gameStateData.score);
     setLives(gameStateData.lives);
     setAnswerCorrect(gameStateData.answer_correct);
@@ -66,22 +58,18 @@ function App() {
   };
 
   const updateNewGameToFalse = () => {
-    console.log("newGame set to false.");
     setNewGame(false);
   };
 
   const updateQuestionAnsweredToFalse = () => {
-    console.log("questionAnswered set to false.");
     setQuestionAnswered(false);
   };
 
   const updateIsDivisionQuestion = (state) => {
-    console.log(`isDivisionQuestion ${state}`);
     setIsDivisionQuestion(state);
   };
 
   const updateQuestionData = (operand1, operand2, operator) => {
-    console.log(`UpdateQuestionData ${operand1}`);
     setQuestionData({ operand1, operand2, operator });
   };
 
@@ -103,7 +91,6 @@ function App() {
 
   const [showSettings, setShowSettings] = useState(true);
   const handleCloseSettings = () => setShowSettings(false);
-  const handleShowSettings = () => setShowSettings(true);
 
   const restartHandler = () => {
     const url = "api/new-game";
@@ -207,15 +194,7 @@ function App() {
                     userAnswer={userAnswer}
                   />
                 )}
-                {/* <QuestionSettings
-              newGame={newGame}
-              onUpdateNewGameToFalse={updateNewGameToFalse}
-              questionAnswered={questionAnswered}
-              onUpdateQuestionAnsweredToFalse={updateQuestionAnsweredToFalse}
-              gameOver={gameOver}
-              onUpdateIsDivisionQuestion={updateIsDivisionQuestion}
-              onUpdateQuestionData={updateQuestionData}
-            /> */}
+
                 {!questionAnswered && (
                   <AnswerForm
                     onUpdateGameState={updateGameState}
@@ -223,17 +202,8 @@ function App() {
                     isDivisionQuestion={isDivisionQuestion}
                   />
                 )}
-
-                {/* {questionAnswered && (
-                  <AnswerResult
-                    answerCorrect={answerCorrect}
-                    answer={answer}
-                    userAnswer={userAnswer}
-                  />
-                )} */}
               </Card>
               {gameOver && <GameOver />}
-              {/* {gameOver && <NewGame onUpdateGameState={updateGameState} />} */}
             </Card>
           )}
         </Col>
