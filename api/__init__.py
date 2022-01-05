@@ -6,7 +6,6 @@ from flask import Flask
 
 
 def create_app(test_config=None):
-    print("APP CREATED!!")
     app = Flask(__name__)
 
     # Not a great secret...
