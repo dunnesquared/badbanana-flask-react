@@ -1,7 +1,5 @@
 .answer-form {
-    /* margin: 1rem auto;
-    padding: 1rem; */
-    width: 100%; 
-    background-color:aliceblue;
-    font-weight: 600;
+  width: 100%;
+  background-color: aliceblue;
+  font-weight: 600;
 }

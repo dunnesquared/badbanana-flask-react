@@ -243,7 +243,6 @@ def test_submit_answer_failure(client, test_input, expected):
         payload = eval(test_input)['question_payload']
         rv = client.post('/api/question', json=payload)
         json_data = rv.get_json()
-        print(json_data)
         assert rv.status_code == 201
         assert json_data['success'] == True
 
@@ -251,6 +250,5 @@ def test_submit_answer_failure(client, test_input, expected):
         payload = eval(test_input)['answer_payload']
         rv = client.post('/api/answer', json=payload)
         json_data = rv.get_json()
-        print(json_data)
         assert rv.status_code == expected['status_code']
         assert json_data['success'] == expected['data']['success']
