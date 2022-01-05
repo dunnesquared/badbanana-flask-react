@@ -55,7 +55,7 @@ const AnswerForm = (props) => {
         // Send it upward.
         props.onUpdateGameState(data);
       })
-      .catch((error) => console.log("Form submit error", error));
+      .catch((error) => console.error("Form submit error", error));
 
     // Clear answer field
     setEnteredAnswer("");

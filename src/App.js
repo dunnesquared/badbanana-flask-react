@@ -102,7 +102,7 @@ function App() {
         setLives(data.lives);
         window.location.reload();
       })
-      .catch((error) => console.log("Restart Game Error", error));
+      .catch((error) => console.error("Restart Game Error", error));
   };
 
   return (

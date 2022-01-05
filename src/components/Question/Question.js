@@ -36,11 +36,10 @@ const Question = (props) => {
           data.question_type.toLowerCase() === "division"
         );
       })
-      .catch((error) => console.log("Question Form Submit Error", error));
+      .catch((error) => console.error("Question Form Submit Error", error));
   };
 
   const nextQuestionClickedHandler = () => {
-    console.log("Next Question clicked!");
     props.onUpdateQuestionAnsweredToFalse();
     getNewQuestionFromAPI();
   };

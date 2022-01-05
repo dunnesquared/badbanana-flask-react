@@ -78,7 +78,7 @@ const QuestionSettings = (props) => {
           data.question_type.toLowerCase() === "division"
         );
       })
-      .catch((error) => console.log("Question Form Submit Error", error));
+      .catch((error) => console.error("Question Form Submit Error", error));
   };
 
   const submitHandler = (event) => {
@@ -98,8 +98,6 @@ const QuestionSettings = (props) => {
 
     event.preventDefault();
   };
-
-  console.log("question.newGame", props.newGame);
 
   // If new game, hide the last question; reset arithmetic type to the first value in the
   // selection list; reset from/to values to default starting values.
