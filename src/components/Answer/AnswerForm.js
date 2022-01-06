@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import Card from "../UI/Card";
 import "./AnswerForm.css";
 
 const AnswerForm = (props) => {
@@ -56,7 +55,7 @@ const AnswerForm = (props) => {
         // Send it upward.
         props.onUpdateGameState(data);
       })
-      .catch((error) => console.log("Form submit error", error));
+      .catch((error) => console.error("Form submit error", error));
 
     // Clear answer field
     setEnteredAnswer("");
@@ -70,7 +69,6 @@ const AnswerForm = (props) => {
   if (!props.isDivisionQuestion) {
     return (
       <Form className="answer-form" onSubmit={submitHandler}>
-        {/* <Card className="answer-form"> */}
         <Form.Group className="mb-3">
           <div>
             <Form.Label>Answer</Form.Label>
@@ -88,7 +86,6 @@ const AnswerForm = (props) => {
             Submit
           </Button>
         </div>
-        {/* </Card> */}
       </Form>
     );
   } else {
@@ -119,8 +116,6 @@ const AnswerForm = (props) => {
             Submit
           </Button>
         </div>
-
-        {/* </Card> */}
       </Form>
     );
   }
