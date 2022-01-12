@@ -4,7 +4,6 @@ from typing import Dict
 from flask import Blueprint, session, request
 
 from .badbanana.game import Game
-from .badbanana.player import Player
 from .badbanana.question.questions import IntegerQuestion, DivisionQuestion
 
 
