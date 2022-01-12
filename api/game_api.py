@@ -1,4 +1,6 @@
-"""This module provides access to API routes/views to requesting clients for Bad Banana game.
+"""Backend API
+
+This module provides access to API routes/views to requesting clients for Bad Banana game.
 
 While modules from the badbanana package are used to generate questions and 
 calculate/verify answers, the game_api module helps by doing the 'admin' work that

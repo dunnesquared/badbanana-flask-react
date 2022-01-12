@@ -1,3 +1,8 @@
+"""Unit-test module
+
+This module unit-tests game_api routes using pytest.
+"""
+
 import pytest
 
 from api import create_app
@@ -5,6 +10,9 @@ from api import create_app
 
 @pytest.fixture
 def client():
+    """Sets up pseudo client used to make requests to api for testing purposes."""
+    
+    # Get a Flask object that's good for testing. 
     app = create_app({'TESTING': True})
 
     with app.test_client() as client:
@@ -13,8 +21,11 @@ def client():
         yield client
 
 
-# To test that pytest setup works.
 def test_hello(client):
+    """Tests that pytest setup works. 
+    
+    Remove only if tested route removed first.
+    """
     rv = client.get('/api/hello')
     json_data = rv.get_json()
     assert "hello, world" == json_data['msg']
@@ -71,6 +82,7 @@ def test_generate_question_success(client):
     assert json_data['answer'] == eval(json_data['question'])
 
 
+# Parameter data for test_generate_question_failure.
 PARAMETERS = [
     ("{}", False),
     ("{'questionType': None, 'smallestNumber': None, 'largestNumber': None,}", False),
@@ -78,7 +90,6 @@ PARAMETERS = [
     ("{'questionType': 'Division', 'smallestNumber': 'x', 'largestNumber': 10,}", False),
     ("{'questionType': 'Division', 'smallestNumber': 1000, 'largestNumber': 1,}", False),
 ]
-
 
 @pytest.mark.parametrize("test_input, expected", PARAMETERS)
 def test_generate_question_failure(client, test_input, expected):
@@ -89,6 +100,7 @@ def test_generate_question_failure(client, test_input, expected):
     assert json_data['success'] == expected
 
 
+# Parameter data for test_submit_answer_success.
 PARAMETERS = [
     # Test 1: Non-division question, right answer
     (str({'question_payload': {'questionType': 'Multiplication', 'smallestNumber': 5,
@@ -154,7 +166,6 @@ PARAMETERS = [
          }),
 ]
 
-
 @pytest.mark.parametrize("test_input, expected", PARAMETERS)
 def test_submit_answer_success(client, test_input, expected):
     # Start new game
@@ -176,7 +187,7 @@ def test_submit_answer_success(client, test_input, expected):
     assert rv.status_code == expected['status_code']
     assert json_data == expected['data']
 
-
+# Parameter data for test_submit_answer_failure
 PARAMETERS = [
     # Test 1: No question generated.
     (str({'question_payload': {},
@@ -222,7 +233,6 @@ PARAMETERS = [
          'data': {'success': False}
          }),
 ]
-
 
 @pytest.mark.parametrize("test_input, expected", PARAMETERS)
 def test_submit_answer_failure(client, test_input, expected):

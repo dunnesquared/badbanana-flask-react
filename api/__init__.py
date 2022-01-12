@@ -1,4 +1,7 @@
-"""Package that runs Flask backend for Bad Banana game."""
+"""Bad Banana backend package
+
+Package that runs Flask backend for Bad Banana game.
+"""
 
 from flask import Flask
 
