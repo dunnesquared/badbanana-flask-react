@@ -1,3 +1,19 @@
+"""This module provides access to API routes/views to requesting clients for Bad Banana game.
+
+While modules from the badbanana package are used to generate questions and 
+calculate/verify answers, the game_api module helps by doing the 'admin' work that
+makes playing the game possible, such as keeping score and determining when users
+have lost.
+
+Client-side session cookies are used to maintain state. The downside of this is 
+that it is possible to 'cheat' by inspecting a cookie for an answer. While storing 
+data server-side would've been more secure, I could not get it to work properly 
+(something to do with the proxy setup of this project...). Client-side
+session cookies are not an ideal solution, but they are a reasonable one for this game—I 
+would hope programmers have better uses of their time than hacking to find the answer for 
+7 x 6.
+"""
+
 import random
 from typing import Dict
 
@@ -6,22 +22,25 @@ from flask import Blueprint, session, request
 from .badbanana.game import Game
 from .badbanana.question.questions import IntegerQuestion, DivisionQuestion
 
-
+# Need for Flask app object to register and access this module. See __init__.py.
 bp = Blueprint("api", __name__)
 
+# Change to make the game harder or easier!
 INITIAL_SCORE = 0
 INITIAL_LIVES = 3
 
-
+# Keep this in here for quick-testing purposes. Remove if deploying app.
 @bp.get('/api/hello')
-def hello():
+def hello() -> Dict:
     return {"msg": "hello, world"}
 
 
 @bp.get('/api/new-game')
-def new_game():
-    """Resets score and lives back to their starting values if needed. returns current score
-    and lives regardless."""
+def new_game() -> Dict:
+    """Resets score and lives back to their starting values, if needed.
+    
+    Returns dict object containing current session values for score and lives. 
+    """
     score = session.get('score', None)
     lives = session.get('lives', None)
     if score != INITIAL_SCORE or lives != INITIAL_LIVES:
@@ -31,8 +50,11 @@ def new_game():
 
 
 @bp.get('/api/score-lives')
-def get_score_lives():
-    """Gets player's current score and number of lives remaining."""
+def get_score_lives() -> Dict:
+    """Gets user's current score and number of lives remaining.
+    
+    Returns dict object containing current session values for score and lives.
+    """
     if not (session.get('score', None) and session.get('lives', None)):
         session['score'] = INITIAL_SCORE
         session['lives'] = INITIAL_LIVES
@@ -41,34 +63,65 @@ def get_score_lives():
 
 @bp.post('/api/question')
 def generate_question() -> Dict:
-    """Gets a random arithmetic question."""
+    """Generates a random arithmetic question for user to answer based on sent parameters.
+    
+    Request payload:
+    { 
+        questionType: 'Multiplication' OR 'Division' OR 'Addition' OR 'Subtraction' OR 'Any'
+        smallestNumber: 0 <= integer <= largestNumber
+        largestNumber: integer >= smallestNumber 
+    } 
+
+    Response payload (if request successful):
+    {
+        'success': True,
+        'question': str,
+        'operand1': int,
+        'operand2': int,
+        'operator': '+' OR '-' OR '*' OR '/',
+        'answer': int if not division question else {'quotient': int, 'remainder': int},
+        'question_type': 'Multiplication' OR 'Division' OR 'Addition' OR 'Subtraction' OR 'Any'
+    }, 201
+
+    Response payload (if request failed):
+    {
+            'success': False,
+            'err_message': str
+    }, 500
+    """
+
+    # Parameters to generate a random question are missing.
     if not (request_data := request.get_json()):
         return {
             'success': False,
             'err_message': "No payload with request."
         }, 500
 
-    # Parse JSON data from request.
+    # Parse JSON request data.
     try:
         question_type = request_data['questionType']
         lowerbound = int(request_data['smallestNumber'])
         upperbound = int(request_data['largestNumber'])
 
-        # Default player required if you're going to instantiate a Game object.
+        # Don't require a Player object in this client/server implementation of Bad Banana:
+        # storing Player object in session for score and lives just adds an unneeded layer 
+        # of abstraction.
         game = Game(player=None)
 
         # Set up question parameters.
         game.set_question_bounds(lowerbound, upperbound)
 
-        # Allow the user to generate a question with a randomly-selected arithmetic operator
+        # Allow the user to generate a question with a randomly-selected arithmetic operator.
         if question_type.strip().lower() == 'any':
             question_type = random.choice(list(game.get_valid_operations()))
 
+        # Generate a random question.
         game.set_question_type(question_type)
         question = game.get_random_question()
 
-        # Serializes object into a dict so it is JSON serializable
+        # Serializes object into a dict so it is JSON serializable.
         session['question'] = question.__dict__
+
         return {
             'success': True,
             'question': str(question),
@@ -78,6 +131,7 @@ def generate_question() -> Dict:
             'answer': question.answer,
             'question_type': question_type,
         }, 201
+
     except (AssertionError, ValueError, TypeError) as e:
         return {
             'success': False,
@@ -87,25 +141,54 @@ def generate_question() -> Dict:
 
 @bp.post('/api/answer')
 def submit_answer() -> Dict:
-    # Retrieve user answer
+    """Checks user's answer and updates game state depending on its correctness.
+
+   Request payload:
+    { 
+        questionType: 'Multiplication' OR 'Division' OR 'Addition' OR 'Subtraction' OR 'Any'
+        smallestNumber: 0 <= integer <= largestNumber
+        largestNumber: integer >= smallestNumber 
+    } 
+
+    Response payload (if request successful):
+    {
+        'success': bool,
+        'answer_correct': bool,
+        'answer': int if not division question else {'quotient': int, 'remainder': int},
+        'game_over': bool,
+        'lives': int,
+        'score': int,
+        'new_game': False
+    }, 201
+
+    Response payload (if request failed):
+    {
+            'success': False,
+            'err_message': str
+    }, 500
+    """
+
+    # Parameters to check user answer are missing.
     if not (request_data := request.get_json()):
         return {
             'success': False,
             'err_message': "No payload with request."
         }, 500
 
-    # Retrieve question from session. Return error if question never asked.
+    # Question missing from session memory. 
+    # This can happen if a question has yet to be generated or there are proxy problems.
     if not (qdata := session.get('question', None)):
         return {
             'success': False,
             'err_message': "No question in session memory."
         }, 500
 
+    # Start process of checking user's answer.
     try:
         # Fetch answer/quotient.
         user_answer1 = int(request_data['user_answer1'])
 
-        # Because integer division returns a quotient and remainder.
+        # Because integer division returns a quotient and remainder
         # the operation needs to be handled differently from other arithmetic.
         is_division_question = request_data['is_division_question']
 
