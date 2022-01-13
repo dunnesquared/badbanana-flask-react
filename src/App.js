@@ -75,7 +75,7 @@ function App() {
     setQuestionData({ operand1, operand2, operator });
   };
 
-  // Keep this as it fetches the lastest scores from the server
+  // Keep this as it fetches the latest scores from the server
   // if the session is still alive.
   useEffect(() => {
     fetch("/api/score-lives")
@@ -114,7 +114,7 @@ function App() {
   // Show game.
   return (
     <Container fluid>
-      {/* Required to modidy game background and font. */}
+      {/* Required to modify game background and font. */}
       <Helmet>
         <style>
           {"body { background-image: linear-gradient(to right, deepskyblue, pink, aquamarine);" +
