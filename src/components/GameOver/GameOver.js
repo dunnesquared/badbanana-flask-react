@@ -1,6 +1,9 @@
 import "./GameOver.css";
 import Card from "../UI/Card";
 
+/**
+ *  Message that tells users they have lost the game.
+ */
 const GameOver = () => {
   return (
     <div>
