@@ -2,6 +2,9 @@
 
 import "./Instructions.css";
 
+/**
+ *  Instructions on how to play the game.
+ */
 const Instructions = (props) => {
   return (
     <div className="instructions">

@@ -1,6 +1,9 @@
 import "./ScoreLives.css";
 import Card from "../UI/Card";
 
+/**
+ * Display of user's current score and number of lives left.
+ */
 const ScoreLives = (props) => {
   return (
     <div>

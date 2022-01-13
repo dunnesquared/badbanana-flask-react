@@ -3,11 +3,15 @@ import Button from "react-bootstrap/Button";
 
 import "./Question.css";
 
+/**
+ *  Question that user must answer; result of that answer.
+ */
 const Question = (props) => {
-  const [questionString, setQuestionString] = useState("");
-
+  /**
+   * Fetches new question from backend API.
+   */
   const getNewQuestionFromAPI = () => {
-    const url = "api/question";
+    // Prepare paylod.
     const smallestNumber = props.smallestNumber;
     const largestNumber = props.largestNumber;
     const questionType = props.questionType;
@@ -17,6 +21,8 @@ const Question = (props) => {
       body: JSON.stringify({ questionType, smallestNumber, largestNumber }),
     };
 
+    // Request new question.
+    const url = "api/question";
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
@@ -28,9 +34,10 @@ const Question = (props) => {
           data.operand2,
           data.operator
         );
-        setQuestionString(questionString);
+
+        // Update question data in app.
         props.onUpdateQuestionData(data.operand1, data.operand2, data.operator);
-        // setQuestion(data.question);
+
         // Let app know whether a division question returned.
         props.onUpdateIsDivisionQuestion(
           data.question_type.toLowerCase() === "division"
@@ -39,11 +46,22 @@ const Question = (props) => {
       .catch((error) => console.error("Question Form Submit Error", error));
   };
 
+  /**
+   * Fetches new question when Next Question button clicked.
+   */
   const nextQuestionClickedHandler = () => {
     props.onUpdateQuestionAnsweredToFalse();
     getNewQuestionFromAPI();
   };
 
+  /**
+   * Returns question formatted with common arithmetic symbols.
+   *
+   * @param {Number} operand1
+   * @param {Number} operand2
+   * @param {string} operator
+   * @returns {string} question
+   */
   const createQuestionString = (operand1, operand2, operator) => {
     let question = null;
     switch (operator) {
@@ -67,6 +85,7 @@ const Question = (props) => {
     return question;
   };
 
+  // To save space on viewport, display result of user answering question.
   if (props.questionAnswered) {
     return (
       <div className="question">
@@ -90,6 +109,9 @@ const Question = (props) => {
       </div>
     );
   } else {
+    {
+      /* Display formatted question. */
+    }
     return (
       <div className="question">
         <div>

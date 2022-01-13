@@ -5,8 +5,11 @@ import Form from "react-bootstrap/Form";
 import Card from "../UI/Card";
 import "./QuestionSettings.css";
 
+/**
+ * Form for user to set question settings.
+ */
 const QuestionSettings = (props) => {
-  // Default interval for operand values
+  // Default range for operand values.
   const numFrom = 1;
   const numTo = 10;
 
@@ -29,6 +32,14 @@ const QuestionSettings = (props) => {
     props.onSetLargestNumber(event.target.value);
   };
 
+  /**
+   * Returns question formatted with common arithmetic symbols.
+   *
+   * @param {Number} operand1
+   * @param {Number} operand2
+   * @param {string} operator
+   * @returns {string} question
+   */
   const createQuestionString = (operand1, operand2, operator) => {
     let question = null;
     switch (operator) {
@@ -52,6 +63,9 @@ const QuestionSettings = (props) => {
     return question;
   };
 
+  /**
+   * Fetches new question from backend API.
+   */
   const getNewQuestionFromAPI = () => {
     const url = "api/question";
     const requestOptions = {
@@ -80,10 +94,14 @@ const QuestionSettings = (props) => {
       })
       .catch((error) => console.error("Question Form Submit Error", error));
   };
-
+  
+  /**
+   * Submit question settings to generate new question.
+   */
   const submitHandler = (event) => {
     // Once this button is clicked, game is no longer new.
     props.onUpdateNewGameToFalse();
+
     getNewQuestionFromAPI();
 
     // You'll want to show the answer form if you've
@@ -99,8 +117,7 @@ const QuestionSettings = (props) => {
     event.preventDefault();
   };
 
-  // If new game, hide the last question; reset arithmetic type to the first value in the
-  // selection list; reset from/to values to default starting values.
+  // Display settings form.
   return (
     <div>
       {!props.gameOver && (

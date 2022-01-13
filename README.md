@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# 🍌 Bad Banana: Math Game (ReactJS version, Alpha release) 🙈
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About the game
 
-## Available Scripts
+Bad Banana is a simple game that allows you to practice your mental math. Try to answer as many arithmetic questions as possible before losing all your lives!
 
-In the project directory, you can run:
+This version of Bad Banana uses the `badbanana` package originally purposed for the
+[original CLI-version of the game](https://github.com/dunnesquared/badbanana). Additional game-logic happens in the `api.game_api` module.
 
-### `yarn start`
+Python 3 and Flask 2 were used for the backend; ReactJS was used for the frontend.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![Game gif](https://media.giphy.com/media/z6hrMCGheUQfU36DiF/giphy.gif)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Motivation
 
-### `yarn test`
+I wanted to learn a frontend framework/library, and React seemed like a good choice given its popularity. There was definitely a learning curve from having worked primarily in Python, but I got something to clunk away (I hope!).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to run
 
-### `yarn build`
+### From source
+I highly recommend cloning this repository. You should have `npm`, `yarn`, and at least `Python 3.8.5` installed on your machine.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+In the project-root directory, run `npm install`. This should install 
+all the JS dependencies for the project. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Inside the `api` folder, create a virtual environment using `venv`. Once you've activated your virtual environment, run `pip3 install requirements.txt` to download all the necessary Python packages for the backend.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+You should be good at this point to get the project running. To start the Flask server, 
+run `yarn start-api`. To start the React client, run `yarn start`. Open `localhost:3000` in a browser. Happy math-ing!
 
-### `yarn eject`
+### From Docker
+I'm currently learning the basics of Docker. I hope to have a Docker image on Docker Hub for this project soon!
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Automated tests
+I used `pytest` for unit testing. To run the tests, make sure you're in the `api` folder. Once there, run `pytest test_api.py`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+I have yet to write any frontend tests. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Safari issue
+I'm having proxy issues in Safari that make the game non-functional. I have yet to look into the problem deeply to see whether there's something wrong with my configuration or something more generally amiss. As such, I developed this app on Firefox and Chrome, and it ran well on both. Hopefully, either of those browsers will work for you, too. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## About the author
+[Personal website](https://dunnesquared.github.io)
