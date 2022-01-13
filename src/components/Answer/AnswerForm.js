@@ -5,8 +5,12 @@ import Button from "react-bootstrap/Button";
 
 import "./AnswerForm.css";
 
+/**
+ * Form for user to answer question. 
+ */
 const AnswerForm = (props) => {
   const [enteredAnswer, setEnteredAnswer] = useState("");
+  // To hold remainder for division questions.
   const [enteredAnswer2, setEnteredAnswer2] = useState("");
 
   const answerChangeHandler = (event) => {
@@ -20,6 +24,7 @@ const AnswerForm = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
 
+    // Prepare payload. Contents depends on whether division question asked.
     const url = "/api/answer";
     const is_division_question = props.isDivisionQuestion;
     const user_answer1 = enteredAnswer;
@@ -30,14 +35,13 @@ const AnswerForm = (props) => {
     } else {
       payload = { is_division_question, user_answer1, user_answer2 };
     }
-
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     };
 
-    // Submit answer.
+    // Submit answer; handle response.
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
@@ -57,15 +61,16 @@ const AnswerForm = (props) => {
       })
       .catch((error) => console.error("Form submit error", error));
 
-    // Clear answer field
+    // Clear answer field.
     setEnteredAnswer("");
   };
 
-  // Don't display the answer form at the start of a new game or game resest.
+  // Don't display the answer form at the start of a new game or game reset.
   if (props.newGame) {
     return null;
   }
 
+  // Display the answer form. What shown depends on whether division question asked.
   if (!props.isDivisionQuestion) {
     return (
       <Form className="answer-form" onSubmit={submitHandler}>
@@ -91,7 +96,6 @@ const AnswerForm = (props) => {
   } else {
     return (
       <Form onSubmit={submitHandler}>
-        {/* <Card className="answer-form"> */}
         <Form.Group className="mb-3">
           <div>
             <Form.Label>Quotient</Form.Label>

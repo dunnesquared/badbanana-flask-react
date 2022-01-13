@@ -1,5 +1,8 @@
 import "./Credits.css";
 
+/**
+ * Hyperlink to author's website.
+ */
 const Credits = () => {
   const url = "https://dunnesquared.github.io";
 

@@ -16,11 +16,13 @@ import Credits from "./components/Credits/Credits";
 
 import "./App.css";
 
+/**
+ * Parent component of Bad Banana ReactJS client.
+ */
 function App() {
   // App title
   const title = "🍌✖️  Welcome to Bad Banana! ➗🙈";
 
-  // Required to get data from AnswerForm component to ScoreLives ScoreComponentt
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(0);
   const [answerCorrect, setAnswerCorrect] = useState(null);
@@ -84,14 +86,18 @@ function App() {
       });
   }, []);
 
-  // Modal states and handlers
+  // Required to hide/show instructions.
   const [showInstructions, setShowInstructions] = useState(false);
   const handleCloseInstructions = () => setShowInstructions(false);
   const handleShowInstructions = () => setShowInstructions(true);
 
+  // Required to hide/show settings form.
   const [showSettings, setShowSettings] = useState(true);
   const handleCloseSettings = () => setShowSettings(false);
 
+  /**
+   * Restarts game to initial state by refreshing browser window.
+   */
   const restartHandler = () => {
     const url = "api/new-game";
 
@@ -105,8 +111,10 @@ function App() {
       .catch((error) => console.error("Restart Game Error", error));
   };
 
+  // Show game.
   return (
     <Container fluid>
+      {/* Required to modidy game background and font. */}
       <Helmet>
         <style>
           {"body { background-image: linear-gradient(to right, deepskyblue, pink, aquamarine);" +
@@ -120,6 +128,7 @@ function App() {
         </Col>
       </Row>
 
+      {/* Display instructions in a dialog box */}
       <Modal show={showInstructions} onHide={handleCloseInstructions}>
         <Modal.Header closeButton>
           <Modal.Title>Instructions</Modal.Title>
@@ -149,6 +158,7 @@ function App() {
 
       <Row>
         <Col>
+          {/* Display question settings in a collapsible component. */}
           <Collapse in={showSettings}>
             <div id="settings-collapse-form">
               <QuestionSettings
