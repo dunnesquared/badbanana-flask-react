@@ -39,5 +39,12 @@ I have yet to write any frontend tests.
 ### Safari issue
 I'm having proxy issues in Safari that make the game non-functional. I have yet to look into the problem deeply to see whether there's something wrong with my configuration or something more generally amiss. As such, I developed this app on Firefox and Chrome, and it ran well on both. Hopefully, either of those browsers will work for you, too. 
 
+## Special Thanks
+As with all projects, I've been the beneficiary of a multitude of online resources, but there were two in particular that helped me out the most for Bad Banana. 
+- Miguel Grinberg's tutorial: [How to Create a React + Flask Project](https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project)
+- Maximilian Schwarzmüller's Udemy course: [React - The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/?src=sac&kw=React+-+The+Comple)
+
+Some of you might recognize the leopard background from Season 1 of Mike White's [The White Lotus](https://www.hbo.com/the-white-lotus). If you haven't seen it yet, what are you waiting for??
+
 ## About the author
 [Personal website](https://dunnesquared.github.io)
