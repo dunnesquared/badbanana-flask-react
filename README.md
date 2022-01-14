@@ -18,7 +18,7 @@ I wanted to learn a frontend framework/library, and React seemed like a good cho
 ## How to run
 
 ### From source
-I highly recommend cloning this repository. You should have `npm`, `yarn`, and at least `Python 3.8.5` installed on your machine.
+I highly recommend cloning this repository. You should have `Node.js`, `yarn`, and at least `Python 3.8.5` installed on your machine.
 
 In the project-root directory, run `npm install`. This should install 
 all the JS dependencies for the project. 
