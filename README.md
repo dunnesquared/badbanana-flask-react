@@ -47,4 +47,4 @@ As with all projects, I've been the beneficiary of a multitude of online resourc
 Some of you might recognize the leopard background from Season 1 of Mike White's [The White Lotus](https://www.hbo.com/the-white-lotus). If you haven't seen it yet, what are you waiting for??
 
 ## About the author
-[Personal website](https://dunnesquared.github.io)
+Read [here](https://dunnesquared.github.io).
