@@ -5,7 +5,7 @@
 Bad Banana is a simple game that allows you to practice your mental math. Try to answer as many arithmetic questions as possible before losing all your lives!
 
 This version of Bad Banana uses the `badbanana` package originally purposed for the
-[original CLI-version of the game](https://github.com/dunnesquared/badbanana). Additional game-logic happens in the `api.game_api` module.
+[original CLI version of the game](https://github.com/dunnesquared/badbanana). Additional game-logic happens in the `api.game_api` module.
 
 Python 3 and Flask 2 were used for the backend; ReactJS was used for the frontend.
 
