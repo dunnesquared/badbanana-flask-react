@@ -24,6 +24,7 @@ yarn-error.log*
 
 # python api
 __pycache__
+.pytest_cache
 venv
 todo*
 flask_session
