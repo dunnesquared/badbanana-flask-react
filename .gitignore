@@ -28,3 +28,7 @@ todo*
 flask_session
 *.bak
 *.gz
+
+# deployment instructions
+readme-gunicorndeploy.md
+readme-howtodeploy-pythonanywhere.md
