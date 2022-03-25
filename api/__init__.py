@@ -2,7 +2,7 @@
 
 Package that runs Flask backend for Bad Banana game.
 """
-
+import os
 from flask import Flask
 
 
@@ -18,9 +18,9 @@ def create_app(test_config=None):
     # app = Flask(__name__)
     app = Flask(__name__, static_folder='../build', static_url_path='/')
 
-    # Not a great secret key. Okay when in development, but should be initialized
-    # and hidden inside an environment variable in production code.
-    app.config.from_mapping(SECRET_KEY='super-secret-key')
+    # Place SECRET_KEY in .env file in top-level directory of project (same level as 
+    # .flaskenv).
+    app.config.from_mapping(SECRET_KEY=os.getenv('SECRET_KEY') or 'unsafe-production-key')
 
     # To avoid console warnings caused by proxy requests made in client.
     app.config.update(
@@ -43,5 +43,14 @@ def create_app(test_config=None):
         return app.send_static_file('index.html')
 
     return app
+
+# Load private environment variable from .env. This needs to be done
+# before object is created.
+from pathlib import Path
+from dotenv import load_dotenv
+
+path = Path('.')            # Get top-level path of project.
+envpath = path / '.env'     # Similar to os.path.join()
+load_dotenv(envpath)
 
 app = create_app()
