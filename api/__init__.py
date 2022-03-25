@@ -15,7 +15,8 @@ def create_app(test_config=None):
     Adapted from tutorial: https://flask.palletsprojects.com/en/2.0.x/tutorial/factory/
     """
 
-    app = Flask(__name__)
+    # app = Flask(__name__)
+    app = Flask(__name__, static_folder='../build', static_url_path='/')
 
     # Not a great secret key. Okay when in development, but should be initialized
     # and hidden inside an environment variable in production code.
@@ -36,4 +37,11 @@ def create_app(test_config=None):
     from api import game_api
     app.register_blueprint(game_api.bp)
 
+    # Going to see whether this actually works...
+    @app.route('/')
+    def index():
+        return app.send_static_file('index.html')
+
     return app
+
+app = create_app()
