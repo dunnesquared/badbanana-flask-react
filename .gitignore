@@ -10,6 +10,8 @@
 
 # production
 /build
+.env
+
 
 # misc
 .DS_Store
@@ -28,3 +30,8 @@ todo*
 flask_session
 *.bak
 *.gz
+
+# deployment instructions
+readme-gunicorndeploy.md
+readme-howtodeploy-pythonanywhere.md
+zip-uploads.sh
