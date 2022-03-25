@@ -32,6 +32,7 @@ flask_session
 *.gz
 
 # deployment instructions
+deployment-help/
 readme-gunicorndeploy.md
 readme-howtodeploy-pythonanywhere.md
 zip-uploads.sh
