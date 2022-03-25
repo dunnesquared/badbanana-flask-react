@@ -5,7 +5,7 @@
 Bad Banana is a simple game that allows you to practice your mental math. Try to answer as many arithmetic questions as possible before losing all your lives!
 
 This version of Bad Banana uses the `badbanana` package originally purposed for the
-[original CLI-version of the game](https://github.com/dunnesquared/badbanana). Additional game-logic happens in the `api.game_api` module.
+[original CLI version of the game](https://github.com/dunnesquared/badbanana). Additional game-logic happens in the `api.game_api` module.
 
 Python 3 and Flask 2 were used for the backend; ReactJS was used for the frontend.
 
@@ -15,7 +15,10 @@ Python 3 and Flask 2 were used for the backend; ReactJS was used for the fronten
 
 I wanted to learn a frontend framework/library, and React seemed like a good choice given its popularity. There was definitely a learning curve from having worked primarily in Python, but I got something to clunk away (I hope!).
 
-## How to run
+## How to play
+
+### From the demo
+You can play online [here](https://mathwoods.pythonanywhere.com)!
 
 ### From source
 I highly recommend cloning this repository. You should have `Node.js`, `yarn`, and at least `Python 3.8.5` installed on your machine.
