@@ -116,7 +116,7 @@ const AnswerForm = (props) => {
           </div>
         </Form.Group>
         <div>
-          <Button type="submit" disabled={!enteredAnswer}>
+          <Button type="submit" disabled={!enteredAnswer || !enteredAnswer2}>
             Submit
           </Button>
         </div>
